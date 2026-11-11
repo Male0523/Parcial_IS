@@ -134,8 +134,24 @@ Se usa la misma interpretación de McCabe que en `docs/04_caja_blanca.md`: V(G)=
 
 - **Original:** `calc` monolítica = **15**.
 - **Refactorizado:** punto de entrada `calc` = **1**; método de contexto `CalculadoraEnvios.calcular` = **2**; función más compleja `validar_peso` = **5**.
-- La suma por bloques de todas las funciones y estrategias nuevas es **27** (base 1 por bloque, decisiones condicionales y manejadores de excepción). Esa suma aumenta porque el comportamiento se dividió en más unidades; el riesgo por unidad cae: máximo 15 → 5. No se presenta la suma agregada como una reducción.
-- Las decisiones están repartidas entre validación (peso/día), tarifa, cupón, costo mínimo y día de fin de semana; la selección de zona usa el registro de estrategias.
+| Bloque nuevo | V(G) |
+|---|---:|
+| `validar_peso` (tres decisiones y un manejador de conversión) | 5 |
+| `validar_dia` | 3 |
+| `calcular_tarifa_base` | 3 |
+| `aplicar_descuento_cliente` | 1 |
+| `aplicar_cupon` | 2 |
+| `aplicar_costo_minimo` | 2 |
+| `redondear_a_centena` | 1 |
+| `CalculadoraEnvios.__init__` | 1 |
+| `CalculadoraEnvios.calcular` | 2 |
+| `calc` (selector y fachada) | 1 |
+| `EstrategiaZona.aplicar` y tres `aplicar` concretos | 4 × 1 = 4 |
+| `obtener_estrategia_zona` (un manejador de excepción) | 2 |
+| **Suma de bloques nuevos** | **27** |
+
+La cuenta sigue V(G)=decisiones/manejadores + 1 por bloque. La suma agregada aumenta porque el comportamiento se dividió en más unidades; el máximo por función baja de 15 a 5 y `calc` queda en 1. No se presenta la suma agregada como una reducción.
+Las decisiones están repartidas entre validación (peso/día), tarifa, cupón, costo mínimo y día de fin de semana; la selección de zona usa el registro de estrategias.
 
 ### Líneas físicas
 
