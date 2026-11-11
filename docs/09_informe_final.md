@@ -171,7 +171,7 @@ La auditoría previa de Fase 8 se realizó sobre las referencias remotas de GitH
 | #2 | Refactorización y estrategia | af258871346022904ebdf8fac7bfb629464bcea3 |
 | #3 | Zona insular, pruebas TDD y documentos v1.2.0 | 2db2f81d56d95930c5f35f9f63981ee4cc17c52c |
 
-Se conservan las ramas docs/fase-2-plan-pruebas, test/suite, refactor/estrategia y feature/zona-insular, además de main. Los commits relevantes incluyen 8fdc662 (registro heredado), d796c2f (casos BB), d0e8a07 (caminos P), 857388d (implementación Strategy de Fase 5), d319927 (pruebas insulares previas al cambio), 56509e1 (estrategia insular) y 2db2f81 (integración de Fase 7).
+Se conservan las ramas docs/fase-2-plan-pruebas, test/suite, refactor/estrategia y feature/zona-insular, además de main. Los commits relevantes incluyen 8fdc662 (registro heredado), 0bc3a36 (casos BB), d796c2f (caminos P), 857388d (implementación Strategy de Fase 5), d319927 (pruebas insulares previas al cambio), 56509e1 (estrategia insular) y 2db2f81 (integración de Fase 7).
 
 La etiqueta anotada v1.0.0 apunta al commit heredado 8fdc6625efaffb39dcb70d57c9495503fc096306. El changelog y las notas documentan v1.0.0, v1.1.0 y v1.2.0; la auditoría de refs encontró únicamente la etiqueta v1.0.0. Por tanto, v1.1.0 y v1.2.0 se describen como versiones documentadas, no como etiquetas verificadas.
 
