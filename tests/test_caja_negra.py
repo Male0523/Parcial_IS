@@ -5,7 +5,7 @@ fallarán contra envios.py heredado; no se sustituyen por los resultados del leg
 """
 import pytest
 
-from envios import calc
+from src.calculadora import calc
 
 
 # Marcador interno: R2 exige que se lance un error pero no especifica su clase.

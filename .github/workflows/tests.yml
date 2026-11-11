@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - docs/fase-2-plan-pruebas
+      - refactor/estrategia
     paths-ignore:
       - "docs/**"
 
@@ -30,7 +31,7 @@ jobs:
           set +e
           python -m pytest -q tests/ \
             --junitxml=evidencias/junit.xml \
-            --cov=envios --cov-branch \
+            --cov=src --cov-branch \
             --cov-report=term-missing \
             --cov-report=json:evidencias/coverage.json \
             2>&1 | tee evidencias/pytest-coverage-output.txt

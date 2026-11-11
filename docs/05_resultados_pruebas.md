@@ -129,3 +129,8 @@ python -m pytest -q tests/ --junitxml=evidencias/junit.xml --cov=envios --cov-br
 ```
 
 El resultado esperado de una repetición contra el mismo legado es que pytest termine con código 1 por las discrepancias funcionales documentadas; no se deben cambiar las expectativas para hacer verde la suite.
+
+
+## Anotación posterior: regresión de la Fase 5
+
+Los resultados de la sección de Fase 4 se conservan sin reemplazo como línea base contra el legado. Después de implementar la nueva versión en `src/`, la misma batería BB-01–BB-41 pasó en la rama `refactor/estrategia`; los caminos P01–P15 siguieron caracterizando `envios.py` sin modificarlo. La ejecución posterior registró 63 aprobadas, 0 fallidas, 0 errores, con 100 % de sentencias y ramas sobre `src/`. El detalle, los defectos corregidos y la diferencia de alcance de cobertura están en [docs/06_refactorizacion.md](06_refactorizacion.md). Evidencia: [GitHub Actions run 43109179938](https://github.com/Male0523/Parcial_IS/actions/runs/43109179938).
