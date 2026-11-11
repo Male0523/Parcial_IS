@@ -124,11 +124,11 @@ Los tres métodos coinciden: **complejidad ciclomática 15**. La descomposición
 
 ## 6. Caminos independientes y casos que los recorren
 
-Se propone una base de 15 caminos: una ruta base y catorce rutas que incorporan ramas adicionales. Cada ruta puede además ejecutar otras ramas ya cubiertas. Los datos se presentan como `(p,z,c,d,cup,flag)`. “costera” se usa únicamente para recorrer la caída a través del `elif` nacional del legado; R2 lo considera zona inválida, y el código original no tiene una rama de error para ella.
+Se propone una base de 15 caminos: una ruta base y catorce rutas que incorporan ramas adicionales. Cada ruta puede además ejecutar otras ramas ya cubiertas. Los datos se presentan como `(p,z,c,d,cup,flag)`. “costera” en P01 se usa únicamente como estímulo estructural para recorrer la rama falsa de `z == "urbana"`, `z == "rural"` y `z == "nacional"` del legado. Es una zona inválida según R2 y no representa un caso funcional aceptado. El retorno descrito para P01 es una deducción de flujo, no un resultado ejecutado.
 
 | Camino | Ruta/ramas nuevas respecto de la base | Entrada para recorrerlo | Resultado esperado según flujo del legado |
 |---|---|---|---|
-| P01 | Base: peso válido; >L1 y >L2; zona no coincide; laboral; cliente normal; cupón desconocido no válido; costo sobre mínimo; flag falso | (11, costera, normal, 1, X, False) | Retorna 9.800; el flujo de zona cae sin recargo |
+| P01 | Base estructural: peso válido; >L1 y >L2; zona no coincide; laboral; cliente normal; cupón desconocido; costo sobre mínimo; flag falso | (11, costera, normal, 1, X, False) | Estructuralmente, retornaría 9.800; costera es inválida según R2 y no es una entrada funcional aceptada |
 | P02 | Nodo 2 sí: peso ≤0, excepción | (-1, urbana, normal, 1, None, False) | Lanza ValueError |
 | P03 | Nodo 2 no y nodo 3 sí: peso >50, excepción | (51, urbana, normal, 1, None, False) | Lanza ValueError |
 | P04 | Nodo 5 sí: peso ≤L1 | (2, urbana, normal, 1, None, False) | Retorna 6.000 |
