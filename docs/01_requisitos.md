@@ -110,16 +110,17 @@ El costo final no puede ser inferior a **$5.000**. Se redondea al múltiplo de $
 
 La comprobación se hará con casos de prueba identificados en la Parte 3. La siguiente matriz deja preparadas las relaciones requisito–historia; los IDs se completarán al aprobar el diseño de casos. No representa resultados de ejecución.
 
-| Requisito | Comprobación prevista | Historia | Casos de prueba |
+| Requisito | Comprobación prevista | Historia | Casos de prueba diseñados |
 |---|---|---|---|
-| R1 | Probar pesos 0, menor que 0, mayor que 50, 50 y valores decimales válidos; comprobar valor o `ValueError` según corresponda. | HU-01, HU-03 | Pendiente: diseño de Parte 3 |
-| R2 | Probar zonas admitidas y no admitida; días 1 y 7, fuera de rango y no enteros; comprobar error para entradas inválidas conforme al requisito. | HU-03 | Pendiente: diseño de Parte 3 |
-| R3 | Probar inmediatamente debajo de 3, 3, inmediatamente arriba de 3; debajo de 10, 10, inmediatamente arriba de 10; y un peso superior con cálculo proporcional. | HU-01 | Pendiente: diseño de Parte 3 |
-| R4 | Comparar el costo sin recargo urbano con rural +20 % y nacional +50 %, controlando las demás entradas. | HU-01 | Pendiente: diseño de Parte 3 |
-| R5 | Comparar día laboral con días 6 y 7; comprobar que $2.000 se agregan antes de descuentos. | HU-02 | Pendiente: diseño de Parte 3 |
-| R6 | Probar cliente frecuente, VIP y normal, cupón ENVIO10 y combinaciones cliente–cupón; calcular ambos descuentos secuencialmente. | HU-02 | Pendiente: diseño de Parte 3 |
-| R7 | Probar cupón desconocido y compararlo con la misma cotización sin cupón; verificar que no hay descuento ni error. | HU-02 | Pendiente: diseño de Parte 3 |
-| R8 | Probar mínimo y valores por debajo del mínimo, además de redondeo hacia abajo, hacia arriba y empate exacto de $50. | HU-03 | Pendiente: diseño de Parte 3 |
+| R1 | Pesos 0, 0.001, 50 y sobre 50; confirmar excepción requerida y límites válidos. | HU-01, HU-03 | BB-01, BB-02, BB-10, BB-11; WB P02–P04 |
+| R2 | Zonas permitidas/no permitidas y días enteros dentro/fuera de 1–7; error para entradas inválidas, sin fijar clase. | HU-03 | BB-12–BB-15, BB-19, BB-20 |
+| R3 | Debajo, igual y encima de 3 y 10; comprobar proporcionalidad y base. | HU-01 | BB-02–BB-10, BB-40; WB P04–P05 |
+| R4 | Comparar urbana, rural y nacional con las tasas 0 %, 20 % y 50 %. | HU-01 | BB-16–BB-18; WB P06–P08 |
+| R5 | Contrastar día laboral, sábado 6 y domingo 7; recargo antes de descuentos. | HU-02 | BB-14, BB-21, BB-25–BB-27, BB-31–BB-33, BB-37–BB-39; WB P09 |
+| R6 | Probar normal, frecuente y VIP, cupón válido y combinaciones; aplicar cliente antes de cupón. | HU-02 | BB-22–BB-39; WB P10–P13 |
+| R7 | Comparar cupón ausente, desconocido y ENVIO10; desconocido no descuenta ni falla. | HU-02 | BB-23, BB-26, BB-29, BB-32, BB-35, BB-38; WB P01, P12–P13 |
+| R8 | Verificar piso, redondeo hacia abajo/arriba y empate de $50 hacia arriba. | HU-03 | BB-08–BB-10, BB-28, BB-30–BB-41; WB P14 |
+
 
 ## 5. Ambigüedades y alcance de interpretación
 
