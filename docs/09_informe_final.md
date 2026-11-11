@@ -214,7 +214,7 @@ La suma de complejidad por bloques nuevos fue 27; no se presenta como una reducc
 
 ## 10. Gestión de configuración
 
-La auditoría de esta corrección confirmó que `main` continúa en `d24a703e5a571ea9646e30cf538897122cabd5e6`, merge commit del PR #4. Los cuatro PR de integración comprobados están cerrados y fusionados:
+La auditoría remota del 11/11/2026, realizada antes de esta actualización documental, confirmó que `main` estaba en `d24a703e5a571ea9646e30cf538897122cabd5e6`, merge commit del PR #4. Los cuatro PR de integración comprobados están cerrados y fusionados:
 
 | PR | Integración | Merge commit |
 |---|---|---|
