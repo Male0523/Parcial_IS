@@ -10,11 +10,22 @@
 
 | Campo académico | Información |
 |---|---|
-| Estudiante | [Nombre del estudiante] |
+| Estudiante | Maria Alejandra Sanchez Magdaniel |
 | Código registrado en los requisitos | 0182410122 |
-| Docente | [Completar] |
-| Institución | [Completar] |
-| Fecha de entrega | [Completar] |
+| Docente | Robert Quintero |
+| Institución | Universidad de la Guajira |
+| Fecha de entrega | 11/11/2026 |
+
+**Derivación de los parámetros:** el código estudiantil es 0182410122; sus últimos seis dígitos son 410122 y se asignan en orden a A–F.
+
+| Dígito | Valor |
+|---|---:|
+| A | 4 |
+| B | 1 |
+| C | 0 |
+| D | 1 |
+| E | 2 |
+| F | 2 |
 
 ## 1. Introducción
 
@@ -48,20 +59,20 @@ El alcance académico comprende requisitos funcionales, diseño y automatizació
 
 ## 4. Parámetros personalizados
 
-Los requisitos relacionan el código estudiantil 0182410122 con estos parámetros:
+Los últimos seis dígitos del código estudiantil 0182410122 forman 410122 y se asignan en orden A=4, B=1, C=0, D=1, E=2 y F=2. De acuerdo con las fórmulas registradas en `docs/01_requisitos.md`, se derivan PMAX = 30 + 5A = 50 kg; L1 = 2 + (B mod 3) = 3 kg; L2 = 10 + C = 10 kg; RR = 10 + 5(E mod 4) = 20%; RN = 40 + 5(F mod 3) = 50%; V = 10 + 5(A mod 3) = 15%; S = 2000 + 500(C mod 4) = $2.000; y CAMBIO = (A + F) mod 3 = (4 + 2) mod 3 = 0, solicitud correspondiente a la zona insular de San Andrés.
 
-| Símbolo | Valor | Aplicación |
-|---|---:|---|
-| PMAX | 50 kg | Límite superior válido de peso |
-| L1 | 3 kg | Límite entre el primer y segundo tramo |
-| L2 | 10 kg | Límite superior del segundo tramo |
-| RR | 20 % | Recargo rural |
-| RN | 50 % | Recargo nacional |
-| V | 15 % | Descuento VIP |
-| S | $2.000 | Recargo de sábado y domingo |
-| CAMBIO | 0 | Solicitud de incorporar San Andrés, zona insular |
+| Parámetro | Fórmula o regla | Valor | Aplicación |
+|---|---|---:|---|
+| PMAX | 30 + 5A | 50 kg | Límite superior válido de peso |
+| L1 | 2 + (B mod 3) | 3 kg | Umbral entre primer y segundo tramo |
+| L2 | 10 + C | 10 kg | Límite superior del segundo tramo |
+| RR | 10 + 5(E mod 4) | 20 % | Recargo rural |
+| RN | 40 + 5(F mod 3) | 50 % | Recargo nacional |
+| V | 10 + 5(A mod 3) | 15 % | Descuento VIP |
+| S | 2000 + 500(C mod 4) | $2.000 | Recargo en días 6 y 7 |
+| CAMBIO | (A + F) mod 3 | 0 | Incorporación de San Andrés, zona insular |
 
-También se aplican tarifa frecuente de 5 %, cupón ENVIO10 de 10 % y costo mínimo de $5.000. Las reglas de paridad registradas son: D=1 impar, por lo que el primer tramo exige peso menor que 3 kg; E=2 par, así que el recargo de fin de semana antecede a los descuentos; B=1 impar, por lo que los descuentos coincidentes se aplican primero al cliente y después al cupón; F=2 par, por lo que cupones desconocidos se ignoran en las zonas que los admiten.
+También se aplican descuento frecuente de 5%, cupón ENVIO10 de 10%, tarifa base de $6.000 y $9.000, $800 por kilogramo proporcional sobre 10 kg y costo mínimo de $5.000. Las reglas de paridad son: D=1 impar, el primer tramo exige peso menor que 3 kg; E=2 par, el recargo de fin de semana antecede a los descuentos; B=1 impar, primero se aplica el descuento de cliente y luego el cupón; F=2 par, los cupones desconocidos se ignoran en las zonas que los admiten.
 
 ## 5. Requisitos funcionales R1-R8
 
@@ -86,12 +97,16 @@ El artefacto heredado se agregó en el commit 8fdc6625efaffb39dcb70d57c9495503fc
 
 La Fase 4 confirmó cuatro defectos frente a R1-R8:
 
-| Defecto | Evidencia de línea base | Requisito |
-|---|---|---|
-| DEF-01 - Límite de 3 kg asignado al tramo inferior | BB-04 esperaba $9.000 y observó $6.000 por la condición heredada p <= L1. | R3 |
-| DEF-02 - Zona y día inválidos aceptados | BB-12, BB-15, BB-19 y BB-20 esperaban error; el legado retornó un importe. | R2 |
-| DEF-03 - Sábado sin recargo | El código probaba d > 6, por lo que el día 6 no recibía $2.000. | R5 |
-| DEF-04 - Truncamiento monetario | BB-40 requería $9.100 desde $9.050 y observó $9.000; BB-09 requería $41.000 y observó $40.900. | R8 |
+La severidad y prioridad siguientes son una evaluación técnica del equipo basada en impacto y extensión; no se atribuyen al profesor. Las observaciones corresponden al comportamiento legado en la Fase 4.
+
+| Defecto | Evidencia histórica del legado | Req. | Severidad / prioridad técnica del equipo |
+|---|---|---|---|
+| DEF-01 - Límite de 3 kg asignado al tramo inferior | BB-04 esperaba $9.000 y observó $6.000; más casos de p=3 se listan en docs/05_resultados_pruebas.md. | R3 | Alta / P1 |
+| DEF-02 - Zona y día inválidos aceptados | BB-12, BB-15, BB-19 y BB-20 esperaban error; el legado retornó un importe. | R2 | Media / P1 |
+| DEF-03 - Sábado sin recargo | La condición `d > 6` excluía el día 6; la comparación BB-21 frente a domingo evidenció la diferencia. | R5 | Media / P2 |
+| DEF-04 - Truncamiento monetario | BB-40 requería $9.100 desde $9.050 y observó $9.000; BB-09 requería $41.000 y observó $40.900. | R8 | Media / P1 |
+
+En la Fase 4 se aprobaron 25/56 = **44,64 %** de los casos y fallaron 31/56 = **55,36 %**; no hubo errores técnicos de entorno o de test. Como medida descriptiva de la inspección estática, cuatro defectos identificados sobre 40 líneas físicas equivalen a 4/40 × 100 = **10 defectos identificados por cada 100 líneas físicas**. No es una tasa estadística ni un conteo de fallas de prueba: cada causa se cuenta una vez, aunque afecte muchos casos, y el denominador no pondera gravedad ni complejidad.
 
 Estos hallazgos son distintos de los malos olores de diseño. El informe de Fase 5 identifica, entre otros, Long Method, Magic Numbers, argumento flag, efecto de consola dentro del cálculo, asignación redundante, condicionales de zona y comparación no idiomática con None.
 
@@ -147,7 +162,43 @@ La implementación activa separa configuración y responsabilidades:
 - src/calculadora.py valida peso y día, calcula tarifas, coordina el contexto CalculadoraEnvios, aplica la política de cupón y delega recargos por zona.
 - tests/ protege la conducta funcional activa y conserva la caracterización de envios.py.
 
-El patrón Strategy evita mantener la fórmula de recargo de cada zona en un único condicional. La estrategia concreta modifica el subtotal; el contexto conserva orden común para fin de semana, descuentos, costo mínimo y redondeo.
+El patrón Strategy evita mantener la fórmula de recargo de cada zona en un único condicional. La estrategia concreta modifica el subtotal; el contexto conserva orden común para fin de semana, descuentos, costo mínimo y redondeo. `calc` obtiene la estrategia mediante `obtener_estrategia_zona` y la entrega al contexto `CalculadoraEnvios`.
+
+```mermaid
+classDiagram
+    class EstrategiaZona {
+        <<Protocol>>
+        +permite_cupones: bool
+        +aplicar(subtotal: Decimal) Decimal
+    }
+    class ZonaUrbana {
+        +permite_cupones: bool
+        +aplicar(subtotal: Decimal) Decimal
+    }
+    class ZonaRural {
+        +permite_cupones: bool
+        +aplicar(subtotal: Decimal) Decimal
+    }
+    class ZonaNacional {
+        +permite_cupones: bool
+        +aplicar(subtotal: Decimal) Decimal
+    }
+    class ZonaInsular {
+        +permite_cupones: bool
+        +aplicar(subtotal: Decimal) Decimal
+    }
+    class CalculadoraEnvios {
+        -_estrategia_zona: EstrategiaZona
+        +__init__(estrategia_zona: EstrategiaZona) None
+        +calcular(peso: object, cliente: str, dia: object, cup: str | None) int
+    }
+
+    EstrategiaZona <|.. ZonaUrbana
+    EstrategiaZona <|.. ZonaRural
+    EstrategiaZona <|.. ZonaNacional
+    EstrategiaZona <|.. ZonaInsular
+    CalculadoraEnvios --> EstrategiaZona : conserva y delega
+```
 
 La comparación cuantitativa documentada en Fase 5 usa la medición de esa fase, anterior a la estrategia insular:
 
@@ -163,17 +214,18 @@ La suma de complejidad por bloques nuevos fue 27; no se presenta como una reducc
 
 ## 10. Gestión de configuración
 
-La auditoría previa de Fase 8 se realizó sobre las referencias remotas de GitHub. main apunta al commit 2db2f81d56d95930c5f35f9f63981ee4cc17c52c; los PR de integración están cerrados y fusionados. Esta sesión no tenía un checkout local del repositorio, por lo que no se afirma un resultado local de git status ni un estado de archivos sin commit:
+La auditoría de esta corrección confirmó que `main` continúa en `d24a703e5a571ea9646e30cf538897122cabd5e6`, merge commit del PR #4. Los cuatro PR de integración comprobados están cerrados y fusionados:
 
 | PR | Integración | Merge commit |
 |---|---|---|
-| #1 | Suite BB-01-BB-41 y P01-P15 | 24dd66794b604dfb938a6fba0759f14c1d74a1de |
-| #2 | Refactorización y estrategia | af258871346022904ebdf8fac7bfb629464bcea3 |
-| #3 | Zona insular, pruebas TDD y documentos v1.2.0 | 2db2f81d56d95930c5f35f9f63981ee4cc17c52c |
+| [#1](https://github.com/Male0523/Parcial_IS/pull/1) | Suite BB-01–BB-41 y P01–P15 | 24dd66794b604dfb938a6fba0759f14c1d74a1de |
+| [#2](https://github.com/Male0523/Parcial_IS/pull/2) | Refactorización, Strategy y regresión | af258871346022904ebdf8fac7bfb629464bcea3 |
+| [#3](https://github.com/Male0523/Parcial_IS/pull/3) | Zona insular, TDD y documentos v1.2.0 | 2db2f81d56d95930c5f35f9f63981ee4cc17c52c |
+| [#4](https://github.com/Male0523/Parcial_IS/pull/4) | Informe final y PDF de Fase 8 | d24a703e5a571ea9646e30cf538897122cabd5e6 |
 
-Se conservan las ramas docs/fase-2-plan-pruebas, test/suite, refactor/estrategia y feature/zona-insular, además de main. Los commits relevantes incluyen 8fdc662 (registro heredado), 0bc3a36 (casos BB), d796c2f (caminos P), 857388d (implementación Strategy de Fase 5), d319927 (pruebas insulares previas al cambio), 56509e1 (estrategia insular) y 2db2f81 (integración de Fase 7).
+En la auditoría remota se observaron las ramas `main`, `docs/fase-2-plan-pruebas`, `docs/fase-8-informe-final`, `feature/zona-insular`, `refactor/estrategia` y `test/suite`. La rama `docs/fase-8-informe-final` permanecía en el head del PR #4. Para esta corrección documental se creó `docs/ajuste-academico-final` desde el `main` actualizado. Las ramas no se reconstruyeron ni se borraron.
 
-La etiqueta anotada v1.0.0 apunta al commit heredado 8fdc6625efaffb39dcb70d57c9495503fc096306. El changelog y las notas documentan v1.0.0, v1.1.0 y v1.2.0; la auditoría de refs encontró únicamente la etiqueta v1.0.0. Por tanto, v1.1.0 y v1.2.0 se describen como versiones documentadas, no como etiquetas verificadas.
+La consulta de referencias Git encontró una sola etiqueta: la etiqueta anotada `v1.0.0`, cuyo objeto `36f9119002981d0c856d9da0b5958f20c158d53f` apunta al commit heredado `8fdc6625efaffb39dcb70d57c9495503fc096306`. `v1.1.0` y `v1.2.0` figuran en changelog y notas de versión, pero no como etiquetas Git verificadas. Los commits y merges citados describen el historial remoto; la lista completa puede consultarse en GitHub.
 
 CHANGELOG.md sigue Keep a Changelog y diferencia adiciones, cambios, correcciones, calidad y compatibilidad. Las notas están en docs/releases/.
 
@@ -191,21 +243,23 @@ La evidencia TDD es RED en run 43114555953 y GREEN en run 43114870307, seguida p
 
 La trazabilidad se conserva desde las reglas personalizadas y las historias HU-01 a HU-03 hasta los casos de caja negra, caminos de caja blanca, funciones y evidencia de Actions. La evaluación heredada hizo visibles cuatro defectos sin alterar el artefacto histórico. La refactorización separó validación, cálculo y estrategia; la zona insular se añadió como una estrategia compatible con el flujo existente.
 
-La evidencia de cobertura al 100 % se presenta siempre asociada a su fase y objeto medido. En particular, el 100 % sobre envios.py de Fase 4 no significa que las reglas fueran funcionalmente correctas: la suite heredada tuvo 31 fallas legítimas frente a requisitos. Las 75 pruebas aprobadas y la cobertura 110/110 sentencias y 22/22 ramas pertenecen a las ejecuciones GREEN de la calculadora activa. No se reporta ejecución local ni de Actions sobre el commit final de main.
+La evidencia de cobertura al 100 % se presenta siempre asociada a su fase y objeto medido. En particular, el 100 % sobre envios.py de Fase 4 no significa que las reglas fueran funcionalmente correctas: la suite heredada tuvo 31 fallas legítimas frente a requisitos. Las 75 pruebas aprobadas y la cobertura 110/110 sentencias y 22/22 ramas pertenecen a las ejecuciones GREEN de la calculadora activa. Las ejecuciones finales citadas corresponden a GitHub Actions en sus respectivas ramas y commits; no se atribuye una ejecución local ni un resultado de Actions al commit consolidado de main.
 
 ## 13. Matriz de trazabilidad
 
-| Requisito o cambio | Definición | Casos | Implementación relacionada | Evidencia verificable |
-|---|---|---|---|---|
-| R1 - Peso | docs/01_requisitos.md | BB-01, BB-02, BB-10, BB-11; P02-P04 | src/calculadora.py: validar_peso | Fase 5 run 43109179938; suite GREEN run 43115183647 |
-| R2 - Zona y día | docs/01_requisitos.md; expansión insular en docs/08_cambio_insular.md | BB-12-BB-15, BB-19-BB-20; P01-P03 | src/calculadora.py: validar_dia; src/estrategias_zona.py: obtener_estrategia_zona | Fase 4 run 43107058958; GREEN run 43115183647 |
-| R3 - Tarifa base | docs/01_requisitos.md | BB-02-BB-10, BB-40; P04-P06 | src/calculadora.py: calcular_tarifa_base | Fase 4 run 43107058958; Fase 5 run 43109179938 |
-| R4 - Recargo zonal | docs/01_requisitos.md; cambio insular en docs/08_cambio_insular.md | BB-16-BB-18; INS-01, INS-06-INS-09; P06-P08 | src/estrategias_zona.py; src/configuracion.py | GREEN runs 43114870307 y 43115183647 |
-| R5 - Fin de semana | docs/01_requisitos.md | BB-14, BB-21, BB-25-BB-27, BB-31-BB-33, BB-37-BB-39; INS-08-INS-09; P09 | src/calculadora.py: CalculadoraEnvios.calcular | GREEN run 43115183647 |
-| R6 - Descuentos | docs/01_requisitos.md | BB-22-BB-39; INS-06-INS-09; P10-P13 | src/calculadora.py: aplicar_descuento_cliente y aplicar_cupon | Fase 5 run 43109179938; GREEN run 43115183647 |
-| R7 - Cupón desconocido | docs/01_requisitos.md; excepción por zona en docs/08_cambio_insular.md | BB-23, BB-26, BB-29, BB-32, BB-35, BB-38; INS-02-INS-05 e INS-12; P01, P12-P13 | src/calculadora.py: aplicar_cupon; política permite_cupones en src/estrategias_zona.py | RED run 43114555953; GREEN run 43115183647 |
-| R8 - Mínimo y redondeo | docs/01_requisitos.md | BB-08-BB-10, BB-28, BB-30-BB-41; P14 | src/calculadora.py: aplicar_costo_minimo y redondear_a_centena | Fase 5 run 43109179938; GREEN run 43115183647 |
-| Cambio CAMBIO=0 - Zona insular | docs/01_requisitos.md y docs/08_cambio_insular.md | INS-01-INS-11; INS-12 conserva R7 en urbana | src/configuracion.py: RECARGO_INSULAR; src/estrategias_zona.py: ZonaInsular | RED 43114555953; GREEN 43114870307; repetición 43115183647 |
+Los resultados de Fase 4 documentan el legado (diferencias esperadas frente a los requisitos). Las evidencias de Fases 5 y 7 verifican la implementación activa corregida en `src/`. P01–P15 caracterizan exclusivamente el flujo heredado; en particular, P01 usa una zona inválida solo para recorrido estructural. La prueba insular INS-12 valida que las demás zonas continúan ignorando cupones desconocidos.
+
+| Requisito / historia | Definición | Casos de caja negra BB | Caminos heredados P | Casos insulares INS | Implementación relacionada | Evidencia histórica del legado (Fase 4) | Evidencia de comportamiento corregido |
+|---|---|---|---|---|---|---|---|
+| R1 — HU-01, HU-03: límites y validación de peso | docs/01_requisitos.md | BB-01, BB-02, BB-10, BB-11 | P02–P04 | INS-10 | `src/calculadora.py:validar_peso` | BB-01, BB-02, BB-10 y BB-11 aprobados en el legado; no evidencian defecto de R1. | Suite activa: 75 aprobadas, run 43115183647. |
+| R2 — HU-03: zona y día válidos | docs/01_requisitos.md | BB-12–BB-15, BB-19–BB-20 | P01 solo recorre estructuralmente la caída de comparaciones de zona; no es aceptación funcional ni valida día. | INS-10–INS-11 | `src/calculadora.py:validar_dia, calc`; `src/estrategias_zona.py:obtener_estrategia_zona` | DEF-02: BB-12, BB-15, BB-19 y BB-20 fallaron al devolver importes en vez de error. | Suite activa, run 43115183647; pruebas de zona/día inválidos en BB e INS. |
+| R3 — HU-01: tramos y exceso proporcional | docs/01_requisitos.md | BB-02–BB-10, BB-13–BB-18, BB-21–BB-40 | P04–P05 (peso menor o igual a L1; y L1 < peso ≤ L2). P06 es zona urbana, no tarifa base. | INS-01, INS-06–INS-09 | `src/calculadora.py:calcular_tarifa_base` | DEF-01: BB-04 esperaba $9.000 y observó $6.000 a 3 kg; múltiples casos relacionados fallaron por la misma condición heredada. | Suites Fase 5 y Fase 7, runs 43109179938 y 43115183647, aprobadas. |
+| R4 — HU-01: recargo por zona | docs/01_requisitos.md; docs/08_cambio_insular.md | BB-16–BB-18 | P06–P08 (urbana, rural, nacional) | INS-01, INS-06–INS-09 | `src/estrategias_zona.py:ZonaUrbana, ZonaRural, ZonaNacional, ZonaInsular`; `src/configuracion.py` | BB-16–BB-18 aparecen fallidas con p=3 por DEF-01; no prueban un defecto separado de recargo zonal. | Fase 7 GREEN y repetición, runs 43114870307 y 43115183647, aprobadas. |
+| R5 — HU-02: recargo de fin de semana | docs/01_requisitos.md | BB-14, BB-21, BB-25–BB-27, BB-31–BB-33, BB-37–BB-39 | P09 | INS-08–INS-09 | `src/calculadora.py:CalculadoraEnvios.calcular` | DEF-03: BB-21 (sábado) y su comparación con domingo revelan omisión; importes a 3 kg también reflejan DEF-01. | Fase 5 y Fase 7 GREEN, runs 43109179938 y 43115183647. |
+| R6 — HU-02: descuentos y orden secuencial | docs/01_requisitos.md | BB-22–BB-39 | P10–P13 | INS-06–INS-09 | `src/calculadora.py:aplicar_descuento_cliente, aplicar_cupon, CalculadoraEnvios.calcular` | Varios BB con p=3 fallan por DEF-01 y algunos por DEF-03/DEF-04; no se documenta un defecto de fórmula de descuento independiente. | Fase 5 y Fase 7 GREEN, runs 43109179938 y 43115183647. |
+| R7 — HU-02: cupón desconocido ignorado | docs/01_requisitos.md; excepción insular en docs/08_cambio_insular.md | BB-23, BB-26, BB-29, BB-32, BB-35, BB-38 | P01 (código desconocido con zona estructuralmente inválida), P12–P13 (cupón ausente/válido) | INS-02–INS-05 (insular rechaza cupones); INS-12 (urbana ignora desconocido) | `src/calculadora.py:aplicar_cupon, CalculadoraEnvios.calcular`; `src/estrategias_zona.py:permite_cupones` | Los BB con peso 3 que fallaron no aíslan R7; P01 es caracterización del legado, no una entrada de negocio válida. | INS-12 pasó en RED y suite GREEN; runs 43114555953 y 43115183647. |
+| R8 — HU-03: mínimo y redondeo | docs/01_requisitos.md | BB-08–BB-10, BB-28, BB-30–BB-41 | P14 (costo mínimo) y P15 (flag y retorno legado) | El costo mínimo usa la ruta compartida; INS no reduce los importes válidos actuales por debajo del piso. | `src/calculadora.py:aplicar_costo_minimo, redondear_a_centena` | DEF-04: BB-09 y BB-40 fallaron por truncamiento; BB-41 comprobó el piso. | Fase 5 y Fase 7 GREEN, runs 43109179938 y 43115183647. |
+| Cambio CAMBIO=0 — nueva zona insular | docs/01_requisitos.md; docs/08_cambio_insular.md | Regresión de zonas existentes: BB-01–BB-41 | P01–P15 continúan siendo exclusivos de `envios.py`; no validan la estrategia insular. | INS-01–INS-11; INS-12 verifica paridad R7 en urbana | `src/configuracion.py:RECARGO_INSULAR`; `src/estrategias_zona.py:ZonaInsular`; `src/calculadora.py:CalculadoraEnvios.calcular` | No aplica a la línea base Fase 4: el cambio insular aún no existía. | RED: run 43114555953, 64 aprobadas/11 fallidas esperadas. GREEN: runs 43114870307 y 43115183647, 75 aprobadas y cobertura de src/ 100%. |
 
 ## 14. Referencias internas y evidencias
 
