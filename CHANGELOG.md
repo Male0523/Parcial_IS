@@ -7,6 +7,25 @@ All notable changes to EnvíaYa are documented here, following [Keep a Changelog
 ### Added
 - Configuration management record for branch, tag, integration, and release history.
 
+## [1.2.0] - 2026-11-11
+
+### Added
+- Zona `insular` (San Andrés) con recargo del 70%, mediante la estrategia `ZonaInsular`.
+- Política por estrategia: no se admiten cupones suministrados en zona insular; `None` y `""` permiten calcular.
+- 12 ejecuciones de prueba dedicadas a la nueva zona, incluida la paridad R7/F=2 de cupones desconocidos en otras zonas.
+
+### Changed
+- El workflow de pruebas también se ejecuta al actualizar `feature/zona-insular`, conservando evidencia RED/GREEN.
+- Las demás zonas, los descuentos compartidos, el recargo de fin de semana, mínimo y redondeo conservan su flujo previo.
+
+### Quality
+- TDD: RED en Actions run 43114555953 (11 fallidas, 64 aprobadas); GREEN en run 43114870307 (75 aprobadas).
+- Cobertura GREEN de `src/`: 110/110 sentencias y 22/22 ramas (100%).
+
+### Compatibility
+- Cambio aditivo y compatible: se añade la zona, sin cambiar la firma pública ni eliminar zonas existentes.
+- La excepción `ValueError` para cupón insular es una decisión técnica documentada, no un tipo fijado por el enunciado.
+
 ## [1.1.0] - 2026-11-11
 
 ### Added
@@ -41,6 +60,7 @@ All notable changes to EnvíaYa are documented here, following [Keep a Changelog
 - Public legacy function: `envios.calc(p, z, c, d, cup=None, flag=False)`.
 - This release is the unmodified inherited snapshot. The `v1.0.0` tag must resolve to the original commit, not a later documentation or refactor commit.
 
-[Unreleased]: https://github.com/Male0523/Parcial_IS/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/Male0523/Parcial_IS/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/Male0523/Parcial_IS/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/Male0523/Parcial_IS/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/Male0523/Parcial_IS/tree/v1.0.0
