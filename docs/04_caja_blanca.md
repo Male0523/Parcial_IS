@@ -142,7 +142,7 @@ Se propone una base de 15 caminos: una ruta base y catorce rutas que incorporan 
 | P12 | Nodo 22 no: sin cupón | (11, urbana, normal, 1, None, False) | Retorna 9.800 |
 | P13 | Nodo 22 sí y nodo 23 sí: cupón válido | (11, urbana, normal, 1, ENVIO10, False) | t=9.800×.90=8.820; retorna 8.800 |
 | P14 | Nodo 25 sí: costo inferior al mínimo | (0.001, urbana, vip, 1, ENVIO10, False) | t=6.000×.85×.90=4.590; se fija en 5.000 |
-| P15 | Nodo 27 sí: flag verdadero | (3, urbana, normal, 1, None, True) | Imprime `costo: 9000` y retorna 9.000 |
+| P15 | Nodo 27 sí: flag verdadero | (3, urbana, normal, 1, None, True) | El legado imprime `costo: 6000` y retorna 6.000 por su condición `p <= L1`; R3 exige 9.000 para p=3 (discrepancia funcional BB-04). |
 
 El test P01 recorre la rama falsa de comparación del cupón (código desconocido), y P12 recorre la rama de cupón ausente. P13 recorre cupón presente y válido. Así se ejercitan ambas salidas de los predicados 22 y 23.
 
