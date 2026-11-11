@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - docs/fase-2-plan-pruebas
+    paths-ignore:
+      - "docs/**"
 
 permissions:
   contents: read
@@ -68,9 +70,15 @@ jobs:
           if coverage.exists():
               data = json.loads(coverage.read_text(encoding="utf-8"))
               totals = data["totals"]
+              statements = totals.get("num_statements", 0)
+              covered_lines = totals.get("covered_lines", 0)
+              branches = totals.get("num_branches", 0)
+              covered_branches = totals.get("covered_branches", 0)
+              statement_pct = 100 * covered_lines / statements if statements else 100.0
+              branch_pct = 100 * covered_branches / branches if branches else 100.0
               out += ["", "## Cobertura",
-                      f"- Sentencias: {totals.get('percent_covered_display', totals.get('percent_covered'))}%",
-                      f"- Ramas cubiertas: {totals.get('covered_branches', 0)} de {totals.get('num_branches', 0)}",
+                      f"- Sentencias: {covered_lines}/{statements} ({statement_pct:.2f}%)",
+                      f"- Ramas: {covered_branches}/{branches} ({branch_pct:.2f}%)",
                       f"- Ramas no cubiertas: {totals.get('missing_branches', 0)}"]
               out += ["", "## Líneas no cubiertas"]
               files = data.get("files", {})
