@@ -66,9 +66,13 @@ def test_caja_negra_requisitos_r1_a_r8(args, expected, request):
         return
     if expected is R2_ERROR:
         # R2 solicita error, pero no prescribe una clase concreta.
-        with pytest.raises(Exception):
-            calc(*args)
-        return
+        try:
+            actual = calc(*args)
+        except Exception:
+            return
+        pytest.fail(
+            f"{case_id}: R2 esperaba una excepción; el código heredado retornó {actual}"
+        )
 
     actual = calc(*args)
     assert actual == expected, (
