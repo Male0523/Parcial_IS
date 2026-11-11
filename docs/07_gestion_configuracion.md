@@ -19,7 +19,7 @@ En `refactor/estrategia` se verificaron `src/calculadora.py`, `src/configuracion
 - `main` es la rama integrada de entrega.
 - `docs/fase-2-plan-pruebas` conserva el historial de requisitos, diseño y ejecución de la línea base.
 - `test/suite` se creó en el commit histórico `37dd270`; contiene los 41 IDs BB y los 15 caminos P sin commits adicionales o reescritura. Su PR #1 fue comparado contra `main` (17 commits adelante, 0 atrás, sin conflictos) y se integró con merge commit `24dd66794b604dfb938a6fba0759f14c1d74a1de`.
-- `refactor/estrategia` retiene su historial posterior a pruebas y su separación del código heredado. Se integra a `main` mediante PR revisado después de la suite.
+- `refactor/estrategia` retiene su historial posterior a pruebas y su separación del código heredado. El PR #2 se integró después de revisar la comparación y `mergeable: true`, mediante el merge commit `af258871346022904ebdf8fac7bfb629464bcea3`.
 - No se empleó force push ni se borraron ramas o commits.
 
 ### Ramas fix/DEF
@@ -77,4 +77,13 @@ git show main:envios.py | sha1sum
 python -m pytest -q tests/
 ```
 
-La salida SHA-1 esperada para ambos archivos es `5585b110170a271dadc20c11d67f8c62fb9a0b3c`. La ejecución documentada de 63 pruebas y cobertura está asociada al run 43109179938 sobre el commit de Fase 5; esta sesión no dispone de checkout local de Git/Python para repetir ese comando después de la integración. No se atribuye esa ejecución al commit final de main. La Fase 6 no implementa la zona insular.
+La salida SHA-1 esperada para ambos archivos es `5585b110170a271dadc20c11d67f8c62fb9a0b3c`. GitHub Actions ejecutó el comando configurado `python -m pytest -q tests/` con reporte de cobertura en run [43111064026](https://github.com/Male0523/Parcial_IS/actions/runs/43111064026), commit `56a4e4a49fb84eb062ee353d390b3e891f2856c7`, rama `refactor/estrategia`: el job `pytest` y el paso de ejecución concluyeron correctamente; la evidencia de Fase 5 documenta 63 aprobadas, 0 fallidas, 0 errores, cobertura activa 100% (99/99 sentencias, 20/20 ramas), y el artefacto `enviaya-test-evidence-43111064026` conserva JUnit, cobertura y salida. El commit `56a4e4a` solo agregó el changelog; los commits siguientes añadieron documentos. Esta sesión no dispone de checkout local de Git/Python para ejecutar el comando después del merge y no atribuye esa ejecución al commit final `af25887`. La Fase 6 no implementa la zona insular.
+
+
+## 7. Estado final verificado
+
+- Ramas remotas presentes: `docs/fase-2-plan-pruebas`, `test/suite`, `refactor/estrategia` y `main`; las dos ramas de trabajo siguen conservadas.
+- PR #1 y PR #2 están integrados en `main`; `main` termina en `af258871346022904ebdf8fac7bfb629464bcea3` antes de este apunte final.
+- Los blobs `envios.py` en el commit heredado y en `main` se compararon: ambos tienen SHA `5585b110170a271dadc20c11d67f8c62fb9a0b3c` y contenido idéntico.
+- El tag `v1.0.0` todavía requiere crearse desde Codespaces; no se reporta como existente. Los comandos reproducibles están en la sección 3.
+- La salida literal del comando de git log debe generarse en Codespaces, porque este entorno de trabajo no tiene `git` instalado. Los hashes, mensajes y relaciones parentales aquí se leyeron del historial remoto.
