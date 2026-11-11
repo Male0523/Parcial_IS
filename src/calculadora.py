@@ -107,6 +107,9 @@ class CalculadoraEnvios:
         peso_validado = validar_peso(peso)
         dia_validado = validar_dia(dia)
 
+        if cup is not None and cup != "" and not self._estrategia_zona.permite_cupones:
+            raise ValueError("la zona insular no admite cupones")
+
         subtotal = calcular_tarifa_base(peso_validado)
         subtotal = self._estrategia_zona.aplicar(subtotal)
 

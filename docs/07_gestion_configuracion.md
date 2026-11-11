@@ -28,16 +28,15 @@ No había evidencia de ramas `fix/DEF-01`, `fix/DEF-02`, `fix/DEF-03` ni `fix/DE
 
 ## 3. Etiquetas y releases
 
-La etiqueta solicitada `v1.0.0` debe ser anotada y apuntar exactamente a `8fdc6625efaffb39dcb70d57c9495503fc096306`, nunca a la refactorización. La herramienta GitHub disponible en esta sesión permite ramas, archivos y merges, pero no expone creación de etiquetas ni refs de Git. La interfaz de Codespaces tampoco pudo abrirse mediante la automatización disponible. Por esa limitación no se afirma que la etiqueta haya sido creada. Créala y verifica su destino con:
+La auditoría de inicio de Fase 6 no encontró etiquetas. Una verificación posterior confirmó que `v1.0.0` ya existe como etiqueta anotada: el objeto de etiqueta `36f9119002981d0c856d9da0b5958f20c158d53f` apunta directamente al commit `8fdc6625efaffb39dcb70d57c9495503fc096306`, que contiene el código heredado. No apunta a la refactorización. En esa verificación, `v1.1.0` figuraba en el changelog pero no como etiqueta. Para inspeccionar el destino:
 
 ```bash
 git fetch origin --tags
-git tag -a v1.0.0 8fdc6625efaffb39dcb70d57c9495503fc096306 -m "Release 1.0.0: implementación heredada"
-git push origin v1.0.0
-git show --no-patch --format="%H %D" v1.0.0
+git cat-file -p v1.0.0
+git rev-parse v1.0.0^{commit}
 ```
 
-La última línea debe mostrar el SHA completo `8fdc6625efaffb39dcb70d57c9495503fc096306`. No se debe mover la etiqueta a un commit de refactorización.
+El último comando debe mostrar `8fdc6625efaffb39dcb70d57c9495503fc096306`.
 
 ## 4. Versionamiento semántico
 
@@ -49,7 +48,7 @@ Si el proyecto declara en el futuro que `src.calculadora.calc` reemplaza oficial
 
 ## 5. Historial y evidencia Git
 
-Los commits observados son descriptivos y cronológicamente conservados. La topología comprobada por SHA y padres es: línea inicial `3ffcbe0 → 8fdc662 → 545ec59`; los 17 commits de Fases 1–4 concluyen en `37dd270); refactor/estrategia parte de `37dd270` y agrega sus commits Fase 5. La suite se integró a main mediante el merge `24dd667`, sin squash y preservando ambos padres. La salida completa local se obtiene con:
+Los commits observados son descriptivos y cronológicamente conservados. La topología comprobada por SHA y padres es: línea inicial `3ffcbe0 → 8fdc662 → 545ec59`; los 17 commits de Fases 1–4 concluyen en `37dd270`; refactor/estrategia parte de `37dd270` y agrega sus commits Fase 5. La suite se integró a main mediante el merge `24dd667`, sin squash y preservando ambos padres. La salida completa local se obtiene con:
 
 ```bash
 git log --oneline --graph --all
@@ -85,5 +84,5 @@ La salida SHA-1 esperada para ambos archivos es `5585b110170a271dadc20c11d67f8c6
 - Ramas remotas presentes: `docs/fase-2-plan-pruebas`, `test/suite`, `refactor/estrategia` y `main`; las dos ramas de trabajo siguen conservadas.
 - PR #1 y PR #2 están integrados en `main`; `main` termina en `af258871346022904ebdf8fac7bfb629464bcea3` antes de este apunte final.
 - Los blobs `envios.py` en el commit heredado y en `main` se compararon: ambos tienen SHA `5585b110170a271dadc20c11d67f8c62fb9a0b3c` y contenido idéntico.
-- El tag `v1.0.0` todavía requiere crearse desde Codespaces; no se reporta como existente. Los comandos reproducibles están en la sección 3.
+- La etiqueta anotada `v1.0.0` fue verificada: su destino es el commit heredado `8fdc6625efaffb39dcb70d57c9495503fc096306`.
 - La salida literal del comando de git log debe generarse en Codespaces, porque este entorno de trabajo no tiene `git` instalado. Los hashes, mensajes y relaciones parentales aquí se leyeron del historial remoto.

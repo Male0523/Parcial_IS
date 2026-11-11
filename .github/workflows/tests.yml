@@ -5,6 +5,7 @@ on:
     branches:
       - docs/fase-2-plan-pruebas
       - refactor/estrategia
+      - feature/zona-insular
     paths-ignore:
       - "docs/**"
 
