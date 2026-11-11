@@ -1,4 +1,4 @@
-"""Cálculo de costos de envío con validaciones y pasos independientes."""
+"""Cálculo de costos de envío con validaciones y contexto de zona."""
 
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 
@@ -20,7 +20,7 @@ from .configuracion import (
     UNO,
     VALOR_CENTENA,
 )
-from .estrategias_zona import obtener_estrategia_zona
+from .estrategias_zona import EstrategiaZona, obtener_estrategia_zona
 
 
 def validar_peso(peso: object) -> Decimal:
@@ -90,6 +90,35 @@ def redondear_a_centena(subtotal: Decimal) -> int:
     return int(centenas * VALOR_CENTENA)
 
 
+class CalculadoraEnvios:
+    """Contexto del patrón Estrategia: calcula con una zona inyectada."""
+
+    def __init__(self, estrategia_zona: EstrategiaZona) -> None:
+        self._estrategia_zona = estrategia_zona
+
+    def calcular(
+        self,
+        peso: object,
+        cliente: str,
+        dia: object,
+        cup: str | None = None,
+    ) -> int:
+        """Valida y aplica las reglas en el orden especificado."""
+        peso_validado = validar_peso(peso)
+        dia_validado = validar_dia(dia)
+
+        subtotal = calcular_tarifa_base(peso_validado)
+        subtotal = self._estrategia_zona.aplicar(subtotal)
+
+        if dia_validado in DIAS_FIN_SEMANA:
+            subtotal += RECARGO_FIN_SEMANA
+
+        subtotal = aplicar_descuento_cliente(subtotal, cliente)
+        subtotal = aplicar_cupon(subtotal, cup)
+        subtotal = aplicar_costo_minimo(subtotal)
+        return redondear_a_centena(subtotal)
+
+
 def calc(
     peso: object,
     zona: str,
@@ -97,18 +126,7 @@ def calc(
     dia: object,
     cup: str | None = None,
 ) -> int:
-    """Devuelve el costo final; no imprime ni recibe un argumento flag."""
-    peso_validado = validar_peso(peso)
-    dia_validado = validar_dia(dia)
+    """Selecciona una estrategia y delega el cálculo en el contexto."""
     estrategia_zona = obtener_estrategia_zona(zona)
-
-    subtotal = calcular_tarifa_base(peso_validado)
-    subtotal = estrategia_zona.aplicar(subtotal)
-
-    if dia_validado in DIAS_FIN_SEMANA:
-        subtotal += RECARGO_FIN_SEMANA
-
-    subtotal = aplicar_descuento_cliente(subtotal, cliente)
-    subtotal = aplicar_cupon(subtotal, cup)
-    subtotal = aplicar_costo_minimo(subtotal)
-    return redondear_a_centena(subtotal)
+    contexto = CalculadoraEnvios(estrategia_zona)
+    return contexto.calcular(peso, cliente, dia, cup)
