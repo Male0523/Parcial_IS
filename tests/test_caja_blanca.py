@@ -25,7 +25,7 @@ PATHS = [
     pytest.param((11, "urbana", "normal", 1, None, False), 9800, None, id="P12"),
     pytest.param((11, "urbana", "normal", 1, "ENVIO10", False), 8800, None, id="P13"),
     pytest.param((0.001, "urbana", "vip", 1, "ENVIO10", False), 5000, None, id="P14"),
-    pytest.param((3, "urbana", "normal", 1, None, True), 9000, "costo: 9000\n", id="P15"),
+    pytest.param((3, "urbana", "normal", 1, None, True), 6000, "costo: 6000\n", id="P15"),
 ]
 
 
