@@ -2,20 +2,21 @@
 
 **Estudiante:** Código 0182410122  
 **Asignatura:** Ingeniería de Software I  
-**Repositorio:** Parcial_IS
+**Proyecto:** EnvíaYa  
+**Repositorio:** [Male0523/Parcial_IS](https://github.com/Male0523/Parcial_IS)
 
 ## 1. Parámetros personalizados
 
-Los seis últimos dígitos del código estudiantil son **410122**:
+Los últimos seis dígitos del código estudiantil son **410122**.
 
-| Variable | Cálculo | Valor |
+| Parámetro | Cálculo | Valor |
 |---|---:|---:|
-| A | 4 | 4 |
-| B | 1 | 1 |
-| C | 0 | 0 |
-| D | 1 | 1 |
-| E | 2 | 2 |
-| F | 2 | 2 |
+| A | Primer dígito de 410122 | 4 |
+| B | Segundo dígito de 410122 | 1 |
+| C | Tercer dígito de 410122 | 0 |
+| D | Cuarto dígito de 410122 | 1 |
+| E | Quinto dígito de 410122 | 2 |
+| F | Sexto dígito de 410122 | 2 |
 | PMAX | 30 + 5 × A | 50 kg |
 | L1 | 2 + (B mod 3) | 3 kg |
 | L2 | 10 + C | 10 kg |
@@ -25,92 +26,112 @@ Los seis últimos dígitos del código estudiantil son **410122**:
 | S | 2000 + 500 × (C mod 4) | $2.000 |
 | CAMBIO | (A + F) mod 3 | 0 |
 
-**Interpretación de paridades:**
-- D = 1 es impar: el tramo 1 aplica cuando peso < 3 kg; el límite de 3 kg no se incluye.
+**Reglas derivadas de paridad:**
+
+- D = 1 es impar: el primer tramo se aplica para peso **menor que 3 kg**; 3 kg pertenece al tramo siguiente.
 - E = 2 es par: el recargo de fin de semana se suma antes de los descuentos.
-- B = 1 es impar: cuando coinciden descuento de cliente y cupón, se aplican ambos; primero el descuento del cliente y luego el cupón.
+- B = 1 es impar: si coinciden descuento de cliente y cupón, se aplican ambos en secuencia: primero cliente y luego cupón.
 - F = 2 es par: un cupón inexistente se ignora.
 
-## 2. Especificación de requisitos
+## 2. Requisitos funcionales
 
 ### R1. Validación del peso
-El peso debe cumplir 0 < peso ≤ 50 kg. Si no cumple, se lanza `ValueError("peso inválido")` (el código heredado contiene el texto sin tilde: `peso invalido`).
+
+El peso admite decimales y debe cumplir **0 < peso ≤ 50 kg**. Si no cumple, la función debe generar `ValueError`.
 
 ### R2. Validación de zona y día
-La zona debe ser urbana, rural o nacional. El día debe ser un entero entre 1 y 7; 6 corresponde al sábado y 7 al domingo. Si la zona o el día no son válidos, se lanza un error.
 
-### R3. Tarifa base por tramos
-- Tramo 1: $6.000 cuando peso < 3 kg.
-- Tramo 2: $9.000 cuando 3 kg ≤ peso ≤ 10 kg.
-- Por encima de 10 kg: $9.000 + $800 por cada kilogramo que exceda 10 kg, proporcionalmente.
+La zona debe ser una de las zonas admitidas por la regla vigente (urbana, rural o nacional). El día debe ser un entero de 1 a 7. Si la zona no es válida o el día está fuera del rango, la función debe lanzar un error.
+
+El requisito no prescribe una clase de excepción concreta para estos errores. La validación del tipo de cliente tampoco está especificada como requisito de error; véase la ambigüedad documentada en la sección 5.
+
+### R3. Tarifa base
+
+- Si el peso es menor que L1 (3 kg): **$6.000**.
+- Si el peso está entre L1 (3 kg) y L2 (10 kg), inclusive: **$9.000**.
+- Si supera L2 (10 kg): **$9.000 + $800 por cada kilogramo adicional**, proporcional al exceso de peso.
 
 ### R4. Recargo por zona
-- Urbana: sin recargo.
-- Rural: +20 %.
-- Nacional: +50 %.
+
+- Urbana: 0 %.
+- Rural: RR = 20 %.
+- Nacional: RN = 50 %.
 
 ### R5. Recargo de fin de semana
-Para sábado (día 6) y domingo (día 7), se agregan $2.000. Por E = 2 (par), este recargo se suma antes de aplicar descuentos.
+
+Sábado corresponde al día 6 y domingo al día 7. Para ambos se agrega S = **$2.000**. Por E par, este recargo se incorpora antes de aplicar los descuentos.
 
 ### R6. Descuentos
+
 - Cliente frecuente: 5 %.
-- Cliente VIP: 15 %.
+- Cliente VIP: V = 15 %.
 - Cupón ENVIO10: 10 %.
-- Como B = 1 (impar), si coinciden descuento del cliente y cupón, se aplican ambos secuencialmente: primero cliente y después cupón.
+- Si coinciden descuento de cliente y cupón, se aplican secuencialmente: primero el descuento de cliente y después el cupón.
 
 ### R7. Cupón inexistente
-Como F = 2 (par), un cupón que no exista se ignora; no genera error ni descuento.
 
-### R8. Piso y redondeo
-El costo final no puede ser inferior a $5.000. El resultado se redondea al múltiplo de $100 más cercano; los valores terminados en $50 se redondean hacia arriba.
+Un cupón no reconocido se ignora: no genera descuento ni error.
+
+### R8. Costo mínimo y redondeo
+
+El costo final no puede ser inferior a **$5.000**. Se redondea al múltiplo de $100 más cercano; los valores terminados exactamente en $50 se redondean hacia arriba.
 
 ## 3. Historias de usuario y criterios de aceptación
 
-### HU-01. Calcular tarifa según peso y zona
-**Como** cliente de EnvíaYa, **quiero** cotizar un envío indicando su peso y zona, **para** conocer la tarifa base y los recargos aplicables.
+### HU-01. Cotizar por peso y zona
 
-- **Dado** un peso mayor que 0 y menor que 3 kg, **cuando** solicito una cotización, **entonces** la tarifa base es $6.000.
-- **Dado** un peso de 3 kg o superior y hasta 10 kg, **cuando** solicito una cotización, **entonces** la tarifa base es $9.000.
-- **Dado** un peso superior a 10 kg y no mayor que 50 kg, **cuando** solicito una cotización, **entonces** se suman $800 por cada kilogramo proporcional que exceda 10 kg a la base de $9.000.
-- **Dado** un peso fuera del intervalo permitido, **cuando** solicito una cotización, **entonces** el sistema lanza un error de peso inválido.
-- **Dado** un envío rural o nacional, **cuando** se calcula su tarifa, **entonces** se aplica respectivamente un recargo del 20 % o del 50 %.
+**Como** cliente de EnvíaYa, **quiero** cotizar un envío por peso y zona, **para** conocer la tarifa aplicable.
 
-### HU-02. Aplicar calendario y descuentos
-**Como** cliente de EnvíaYa, **quiero** que la cotización considere el día, mi tipo de cliente y mi cupón, **para** obtener el costo correspondiente.
+- **Dado** un peso válido menor que 3 kg, **cuando** se calcula la tarifa base, **entonces** es $6.000.
+- **Dado** un peso válido entre 3 kg y 10 kg inclusive, **cuando** se calcula la tarifa base, **entonces** es $9.000.
+- **Dado** un peso válido superior a 10 kg, **cuando** se calcula la tarifa base, **entonces** se agregan $800 por kilogramo proporcional que exceda 10 kg.
+- **Dado** un peso menor o igual a 0 kg o superior a 50 kg, **cuando** se solicita una cotización, **entonces** se genera `ValueError`.
+- **Dado** un envío rural o nacional, **cuando** se aplica el recargo zonal, **entonces** se agrega respectivamente 20 % o 50 %.
 
-- **Dado** un envío programado para sábado o domingo, **cuando** se calcula su costo, **entonces** se agregan $2.000 antes de los descuentos.
-- **Dado** un cliente frecuente, **cuando** cotiza, **entonces** recibe un descuento del 5 %.
-- **Dado** un cliente VIP, **cuando** cotiza, **entonces** recibe un descuento del 15 %.
-- **Dado** un cupón ENVIO10 válido, **cuando** se aplica, **entonces** se descuenta un 10 %.
-- **Dado** que coinciden descuento de cliente y cupón, **cuando** se calcula el costo, **entonces** ambos descuentos se aplican secuencialmente, primero cliente y luego cupón.
-- **Dado** un cupón inexistente, **cuando** se calcula el costo, **entonces** el cupón se ignora.
+### HU-02. Considerar día y descuentos
 
-### HU-03. Validar y entregar un costo consistente
-**Como** responsable de calidad del sistema, **quiero** que se validen los datos de entrada y se normalice el costo final, **para** evitar cotizaciones inválidas o inconsistentes.
+**Como** cliente de EnvíaYa, **quiero** que la cotización considere el día, mi categoría de cliente y un cupón, **para** obtener el costo con los recargos y descuentos definidos.
 
-- **Dado** una zona distinta de urbana, rural o nacional, **cuando** se solicita una cotización, **entonces** se lanza un error.
-- **Dado** un día fuera del intervalo 1 a 7, **cuando** se solicita una cotización, **entonces** se lanza un error.
-- **Dado** un costo calculado inferior a $5.000, **cuando** se obtiene el resultado final, **entonces** el costo se establece en $5.000.
-- **Dado** un costo que debe normalizarse, **cuando** se devuelve el resultado, **entonces** se redondea al múltiplo de $100 más cercano y los $50 se redondean hacia arriba.
+- **Dado** un envío en día 6 o 7, **cuando** se calcula el costo, **entonces** se agregan $2.000 antes de los descuentos.
+- **Dado** un cliente frecuente o VIP, **cuando** se calcula el costo, **entonces** se aplica respectivamente 5 % o 15 % de descuento.
+- **Dado** el cupón ENVIO10, **cuando** se calcula el costo, **entonces** se aplica 10 % de descuento.
+- **Dado** que coinciden un descuento de cliente y ENVIO10, **cuando** se calcula el costo, **entonces** se aplican ambos en orden secuencial, cliente primero.
+- **Dado** un cupón desconocido, **cuando** se calcula el costo, **entonces** se ignora sin descuento ni error.
 
-## 4. Matriz inicial de trazabilidad
+### HU-03. Validar entradas y entregar un costo normalizado
 
-Los identificadores de casos se asignarán en la Parte 3 y se completarán con los resultados de ejecución en la Parte 5.
+**Como** usuario de la calculadora, **quiero** que se validen los datos especificados y que el resultado respete el mínimo y redondeo, **para** recibir una cotización consistente.
 
-| Requisito | Historia de usuario | Casos de prueba |
-|---|---|---|
-| R1 | HU-01, HU-03 | Pendiente de diseño (Parte 3) |
-| R2 | HU-03 | Pendiente de diseño (Parte 3) |
-| R3 | HU-01 | Pendiente de diseño (Parte 3) |
-| R4 | HU-01 | Pendiente de diseño (Parte 3) |
-| R5 | HU-02 | Pendiente de diseño (Parte 3) |
-| R6 | HU-02 | Pendiente de diseño (Parte 3) |
-| R7 | HU-02 | Pendiente de diseño (Parte 3) |
-| R8 | HU-03 | Pendiente de diseño (Parte 3) |
+- **Dado** una zona no admitida o un día que no sea un entero de 1 a 7, **cuando** se solicita una cotización, **entonces** se lanza un error.
+- **Dado** un costo calculado inferior a $5.000, **cuando** se obtiene el costo final, **entonces** se devuelve $5.000.
+- **Dado** un costo final que requiere redondeo, **cuando** se devuelve el resultado, **entonces** se usa el múltiplo de $100 más cercano y los empates de $50 se redondean hacia arriba.
 
-## 5. Solicitud de cambio asignada
+## 4. Comprobación de requisitos y trazabilidad
 
-CAMBIO = (4 + 2) mod 3 = 0. Corresponde incorporar la zona **insular (San Andrés)** con recargo del **70 %**. Los envíos insulares no aceptan cupones. Este cambio se analizará e implementará en la Parte 8, en una rama independiente y con pruebas escritas primero.
+La comprobación se hará con casos de prueba identificados en la Parte 3. La siguiente matriz deja preparadas las relaciones requisito–historia; los IDs se completarán al aprobar el diseño de casos. No representa resultados de ejecución.
+
+| Requisito | Comprobación prevista | Historia | Casos de prueba |
+|---|---|---|---|
+| R1 | Probar pesos 0, menor que 0, mayor que 50, 50 y valores decimales válidos; comprobar valor o `ValueError` según corresponda. | HU-01, HU-03 | Pendiente: diseño de Parte 3 |
+| R2 | Probar zonas admitidas y no admitida; días 1 y 7, fuera de rango y no enteros; comprobar error para entradas inválidas conforme al requisito. | HU-03 | Pendiente: diseño de Parte 3 |
+| R3 | Probar inmediatamente debajo de 3, 3, inmediatamente arriba de 3; debajo de 10, 10, inmediatamente arriba de 10; y un peso superior con cálculo proporcional. | HU-01 | Pendiente: diseño de Parte 3 |
+| R4 | Comparar el costo sin recargo urbano con rural +20 % y nacional +50 %, controlando las demás entradas. | HU-01 | Pendiente: diseño de Parte 3 |
+| R5 | Comparar día laboral con días 6 y 7; comprobar que $2.000 se agregan antes de descuentos. | HU-02 | Pendiente: diseño de Parte 3 |
+| R6 | Probar cliente frecuente, VIP y normal, cupón ENVIO10 y combinaciones cliente–cupón; calcular ambos descuentos secuencialmente. | HU-02 | Pendiente: diseño de Parte 3 |
+| R7 | Probar cupón desconocido y compararlo con la misma cotización sin cupón; verificar que no hay descuento ni error. | HU-02 | Pendiente: diseño de Parte 3 |
+| R8 | Probar mínimo y valores por debajo del mínimo, además de redondeo hacia abajo, hacia arriba y empate exacto de $50. | HU-03 | Pendiente: diseño de Parte 3 |
+
+## 5. Ambigüedades y alcance de interpretación
+
+- **Tipo de cliente:** el enunciado enumera normal, frecuente y VIP y define descuentos para frecuente y VIP. No establece expresamente que un cliente distinto de esos valores deba provocar un error. Por ello, esta especificación no añade una validación obligatoria ni fija el comportamiento para valores no enumerados. Ese caso se registrará como ambigüedad, no como defecto, salvo aclaración del profesor.
+- **Excepción para zona y día:** R2 pide lanzar un error, pero no especifica el tipo concreto. Las pruebas comprobarán que se lanza una excepción, sin exigir una clase particular.
+- **Redondeo:** “más cercano” con empate de $50 hacia arriba se interpreta como redondeo aritmético para importes no negativos.
+- **Parámetros de identificación:** PMAX, L1, L2, RR, RN, V, S y CAMBIO proceden del código 0182410122 y prevalecen sobre valores de ejemplos genéricos.
+
+## 6. Solicitud de cambio asignada
+
+CAMBIO = (A + F) mod 3 = (4 + 2) mod 3 = 0. En la Parte 8 se evaluará la nueva zona **insular (San Andrés)**, con recargo de **70 %**, y la restricción de que los envíos insulares no aceptan cupones. Esta regla es una solicitud de cambio y no forma parte de la línea base original de R1–R8.
 
 ---
-**Nota de control:** esta especificación representa las reglas personalizadas del estudiante. El código heredado se conserva inicialmente sin corregir para que las pruebas permitan identificar sus defectos antes de la refactorización.
+
+**Control de configuración:** la presente especificación describe los requisitos personalizados. El código heredado permanece sin cambios durante el diseño de pruebas inicial.
