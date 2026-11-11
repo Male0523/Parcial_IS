@@ -103,7 +103,7 @@ Base común: peso 3 kg, zona urbana, tarifa $9.000. Laboral es día 1–5; fin d
 
 ## 5. Casos de prueba diseñados
 
-Los datos se expresan como `(p, z, c, d, cup)`. Los casos de error esperan una excepción, sin exigir clase salvo R1. Los importes esperados están calculados conforme a la especificación. “EP” = particiones equivalentes; “BVA” = valores límite; “TD” = tabla de decisión.
+Los datos se expresan como `(p, z, c, d, cup)`. Los casos de error esperan una excepción, sin exigir clase salvo R1. Los importes esperados están calculados conforme a la especificación. “EP” = particiones equivalentes; “BVA” = valores límite; “TD” = tabla de decisión. La columna “Resultado esperado” corresponde a los requisitos; no describe una ejecución del código heredado. Las diferencias estáticas identificadas se enumeran en la sección 9.
 
 | ID | Req. | Técnica | Entrada | Resultado esperado | Justificación |
 |---|---|---|---|---|---|
@@ -146,7 +146,7 @@ Los datos se expresan como `(p, z, c, d, cup)`. Los casos de error esperan una e
 | BB-37 | R5,R6,R8 | TD | (3, urbana, vip, 6, None) | $9.400 | 11.000×.85=9.350; empate sube. |
 | BB-38 | R5,R6,R7,R8 | TD | (3, urbana, vip, 6, X) | $9.400 | Cupón ignorado. |
 | BB-39 | R5,R6,R8 | TD | (3, urbana, vip, 6, ENVIO10) | $8.400 | 11.000×.85×.90=8.415 → 8.400. |
-| BB-40 | R8 | BVA | (10.0625, urbana, normal, 1, None) | $9.100 | Base 9.000+50=9.050; empate sube. |
+| BB-40 | R8 | BVA | (10.0625, urbana, normal, 1, None) | **Esperado R8: $9.100. Legado (deducción estática): $9.000 por truncamiento.** | Base 9.000+50=9.050; empate sube según requisito. El legado usa `int(t/100)*100` y trunca. |
 | BB-41 | R8 | EP/cálculo | (0.001, urbana, vip, 1, ENVIO10) | $5.000 | 6.000×.85×.90=4.590; aplica costo mínimo. |
 
 Los 18 casos BB-22–BB-39 recorren las 3 categorías de cliente × 3 clases de cupón × 2 calendarios. BB-23/26/29/32/35/38 usan el cupón desconocido; X representa cualquier código no reconocido.
@@ -197,3 +197,27 @@ Base $6.000 (0.001 kg). Descuento VIP: $6.000×0.85=$5.100. ENVIO10: $5.100×0.9
 ## 8. Revisión del diseño
 
 Hay 41 casos identificados, sin filas duplicadas. La matriz cubre límites indicados, las 18 combinaciones de la tabla de decisión, zonas, reglas de cupón, piso y redondeo. No se fija comportamiento para tipos de cliente, peso o cupón que el enunciado no especifica. No se han ejecutado pruebas ni se reportan métricas de ejecución.
+
+
+## 9. Resultado requerido y comportamiento deducible del código heredado
+
+Esta comparación es una **deducción por inspección estática** de `envios.py`, no una ejecución ni evidencia de prueba. “Esperado” aplica R1–R8; “legado” describe lo que el flujo actual devolvería o la excepción que produciría para la entrada indicada. Los casos no incluidos en la tabla no tienen una diferencia conocida al contrastar sus entradas y operaciones con la implementación.
+
+| Caso | Resultado esperado por requisito | Comportamiento legado deducible estáticamente | Causa |
+|---|---|---|---|
+| BB-04 | $9.000 | $6.000 | La condición heredada usa `p <= L1`, por lo que incluye 3 kg en el tramo 1. |
+| BB-09 | $41.000 | $40.900 | El importe previo es $40.999,20; `int(t/100)*100` trunca. |
+| BB-12 | Error por día 0 | Retornaría $9.000 | No hay validación explícita del rango del día. |
+| BB-15 | Error por día 8 | Retornaría $11.000 | No valida rango; `d > 6` agrega el recargo. |
+| BB-19 | Error por zona no admitida | Retornaría $9.000 | Ninguna rama de zona coincide y el flujo continúa sin recargo ni error. |
+| BB-20 | Error por día no entero | Retornaría $9.000 | No hay validación explícita de tipo/rango; 1.5 no satisface `d > 6`. |
+| BB-21 | $11.000 | $9.000 | `d > 6` no incluye sábado (6). |
+| BB-28, BB-29 | $8.600 | $8.500 | $8.550 se trunca a la centena inferior. |
+| BB-30 | $7.700 | $7.600 | $7.695 se trunca a la centena inferior. |
+| BB-31, BB-32 | $10.500 | $10.400 | $10.450, empate que R8 redondea hacia arriba, se trunca. |
+| BB-34, BB-35 | $7.700 | $7.600 | $7.650, empate que R8 redondea hacia arriba, se trunca. |
+| BB-36 | $6.900 | $6.800 | $6.885 se trunca a la centena inferior. |
+| BB-37, BB-38 | $9.400 | $9.300 | $9.350, empate que R8 redondea hacia arriba, se trunca. |
+| BB-40 | $9.100 | $9.000 | $9.050 es empate; el requisito sube y el legado trunca. |
+
+En BB-33 ($9.405 → $9.400) y BB-39 ($8.415 → $8.400), la truncación heredada coincide por casualidad con el redondeo requerido. También coincide para casos como BB-08 ($9.000,80 → $9.000). Coincidencia del resultado en esos datos no significa que la estrategia heredada implemente redondeo al más cercano.
