@@ -193,5 +193,5 @@ python -m pytest -q tests/ --junitxml=evidencias/junit.xml --cov=src --cov-branc
 
 - `envios.py` conserva su SHA de contenido original: `5585b110170a271dadc20c11d67f8c62fb9a0b3c`.
 - Los resultados Fase 4 en `docs/05_resultados_pruebas.md` se preservan como línea base histórica.
-- No se implementó la zona insular.
+- La Fase 5 no incorporó la zona insular; esta se agregó después en la Fase 7 y se representa en el diagrama vigente de la sección 4.2.
 - La rama de esta fase es `refactor/estrategia`; no se trabajó sobre `main`.
