@@ -79,10 +79,22 @@ python -m pytest -q tests/
 La salida SHA-1 esperada para ambos archivos es `5585b110170a271dadc20c11d67f8c62fb9a0b3c`. GitHub Actions ejecutó el comando configurado `python -m pytest -q tests/` con reporte de cobertura en run [43111064026](https://github.com/Male0523/Parcial_IS/actions/runs/43111064026), commit `56a4e4a49fb84eb062ee353d390b3e891f2856c7`, rama `refactor/estrategia`: el job `pytest` y el paso de ejecución concluyeron correctamente; la evidencia de Fase 5 documenta 63 aprobadas, 0 fallidas, 0 errores, cobertura activa 100% (99/99 sentencias, 20/20 ramas), y el artefacto `enviaya-test-evidence-43111064026` conserva JUnit, cobertura y salida. El commit `56a4e4a` solo agregó el changelog; los commits siguientes añadieron documentos. Esta sesión no dispone de checkout local de Git/Python para ejecutar el comando después del merge y no atribuye esa ejecución al commit final `af25887`. La Fase 6 no implementa la zona insular.
 
 
-## 7. Estado final verificado
+## 7. Estado final verificado al cierre de la Fase 6
 
 - Ramas remotas presentes: `docs/fase-2-plan-pruebas`, `test/suite`, `refactor/estrategia` y `main`; las dos ramas de trabajo siguen conservadas.
 - PR #1 y PR #2 están integrados en `main`; `main` termina en `af258871346022904ebdf8fac7bfb629464bcea3` antes de este apunte final.
 - Los blobs `envios.py` en el commit heredado y en `main` se compararon: ambos tienen SHA `5585b110170a271dadc20c11d67f8c62fb9a0b3c` y contenido idéntico.
 - La etiqueta anotada `v1.0.0` fue verificada: su destino es el commit heredado `8fdc6625efaffb39dcb70d57c9495503fc096306`.
 - La salida literal del comando de git log debe generarse en Codespaces, porque este entorno de trabajo no tiene `git` instalado. Los hashes, mensajes y relaciones parentales aquí se leyeron del historial remoto.
+
+
+## 8. Actualización de estado remoto posterior a la Fase 6
+
+Esta sección complementa el registro histórico anterior; no reescribe el estado observado al cierre de la Fase 6.
+
+- HEAD remoto de `main` verificado: `9967f0d4f1c9c39d380f611f65dfaf9580a66b57`. La integración más reciente en el corte de esta actualización incluye PR #6; el commit siguiente agrega evidencias versionadas.
+- PR #1 a #6 están fusionados en `main`: #1 `24dd66794b604dfb938a6fba0759f14c1d74a1de`; #2 `af258871346022904ebdf8fac7bfb629464bcea3`; #3 `2db2f81d56d95930c5f35f9f63981ee4cc17c52c`; #4 `d24a703e5a571ea9646e30cf538897122cabd5e6`; #5 `c892adcc64691c5f58492de67a412225c1d3e295`; #6 `c9114b52c3fb61d6922828a7096dee01d14d499c`.
+- Las etiquetas anotadas existen: `v1.0.0` → `8fdc6625efaffb39dcb70d57c9495503fc096306`; `v1.1.0` → `af258871346022904ebdf8fac7bfb629464bcea3`; `v1.2.0` → `2db2f81d56d95930c5f35f9f63981ee4cc17c52c`.
+- La lista remota de ramas cambia con el tiempo; las ramas activas observadas durante esta actualización incluyen `main`, `docs/fase-2-plan-pruebas`, `docs/fase-8-informe-final`, `docs/ajuste-academico-final`, `docs/final-quality-corrections`, `chore/configuracion-mantenibilidad`, `feature/zona-insular`, `refactor/estrategia` y `test/suite`. No se encontraron ramas `fix/DEF-01` a `fix/DEF-04`; las correcciones se integraron dentro de la refactorización.
+- Actions run 43127692693, sobre el HEAD entonces actual de `main`, ejecutó 75 casos por invocación; la cobertura registrada fue 110/110 sentencias y 22/22 ramas. El historial de `evidencias/historial_git.txt` y los reportes junit/coverage versionados deben interpretarse según el commit y timestamp que contienen, no como salida de este corte: el archivo de historial guardado termina en `c9114b5` y los reportes guardados son de una ejecución de 63 casos/99 sentencias/20 ramas.
+- El texto “esta sesión no dispone de checkout local” de la sección 6 documenta la limitación existente durante la Fase 6, no el estado remoto ni una afirmación sobre el entorno actual.
