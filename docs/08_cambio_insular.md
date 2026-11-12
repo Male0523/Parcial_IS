@@ -75,7 +75,16 @@ Los resultados se calcularon a mano con tarifa base $9.000 a 3 kg; no se derivan
 4. INS-08: ($9.000 × 1,70 + $2.000) × 0,85 = $14.705 → **$14.700**.
 5. INS-09: ($9.000 × 1,70 + $2.000) × 0,95 = $16.435 → **$16.400**.
 
-La batería completa conserva además BB-01–BB-41, P01–P15 y siete regresiones defensivas anteriores.
+La batería completa conserva además BB-01–BB-41, P01–P15 y siete regresiones defensivas anteriores. INS-13–INS-18 amplían la comprobación de recargos rurales, nacionales e insulares sobre el tramo proporcional y PMAX, con descuentos y, donde se indica, fin de semana.
+
+**Cálculos de INS-13–INS-18:**
+
+- INS-13: base $9.800; rural $11.760; frecuente $11.172; ENVIO10 $10.054,80; redondeo → **$10.100**.
+- INS-14: base $41.000; rural $49.200; sábado +$2.000 = $51.200; VIP $43.520; redondeo → **$43.500**.
+- INS-15: base $9.800; nacional $14.700; frecuente $13.965; redondeo → **$14.000**.
+- INS-16: base $41.000; nacional $61.500; domingo +$2.000 = $63.500; ENVIO10 $57.150; empate → **$57.200**.
+- INS-17: base $9.800; insular $16.660; frecuente $15.827; redondeo → **$15.800**.
+- INS-18: base $41.000; insular $69.700; domingo +$2.000 = $71.700; VIP $60.945; redondeo → **$60.900**.
 
 ## 6. Evidencia TDD: RED y GREEN
 
