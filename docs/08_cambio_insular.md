@@ -127,3 +127,8 @@ La regla dice que la zona insular no admite cupones, pero no prescribe clase de 
 `None` y `""` se tratan como ausencia de cupón. Cualquier otro valor suministrado se rechaza en insular, incluso `ENVIO10` o un código desconocido. En urbana, rural y nacional se preserva R7: cupón desconocido se ignora. No se especificó una validación nueva para el tipo de objeto del cupón; la API mantiene el contrato existente `str | None`.
 
 La incorporación es compatible y se registra como v1.2.0: agrega una clave y una estrategia, sin retirar ni cambiar la API actual. No se implementó la zona insular en `envios.py` heredado ni se avanzó a Fase 8.
+
+
+## Verificación adicional en la rama correctiva
+
+Después de ampliar los casos INS-13–INS-18 y corregir P12, GitHub Actions ejecutó el workflow completo en el commit `08dcbd9b2d81de87e86202e27a11447a67d4f563` (run [43133563143](https://github.com/Male0523/Parcial_IS/actions/runs/43133563143)). Las cuatro invocaciones configuradas aprobaron 81 pruebas; la medición de cobertura de `src/` fue 110/110 sentencias y 22/22 ramas (100 %). Esto es evidencia de la rama del PR #7, no una nueva ejecución de Fase 7 ni un resultado del HEAD de `main`. El artefacto `enviaya-test-evidence-43133563143` contiene los reportes de esa ejecución.
