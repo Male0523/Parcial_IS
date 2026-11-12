@@ -60,6 +60,12 @@ Los resultados se calcularon a mano con tarifa base $9.000 a 3 kg; no se derivan
 | INS-10 | Peso cero | `ValueError` de validación general de peso |
 | INS-11 | Día 8 | `ValueError` de validación general de día |
 | INS-12 | Urbana con cupón desconocido | $9.000; cupón ignorado por R7/F=2 |
+| INS-13 | Rural, 11 kg, frecuente y ENVIO10, día laboral | $10.100 |
+| INS-14 | Rural, 50 kg, VIP, sábado | $43.500 |
+| INS-15 | Nacional, 11 kg, frecuente, día laboral | $14.000 |
+| INS-16 | Nacional, 50 kg, ENVIO10, domingo | $57.200 |
+| INS-17 | Insular, 11 kg, frecuente, día laboral | $15.800 |
+| INS-18 | Insular, 50 kg, VIP, domingo | $60.900 |
 
 **Cálculos representativos:**
 
