@@ -274,4 +274,4 @@ Los resultados de Fase 4 documentan el legado (diferencias esperadas frente a lo
 - [Changelog](../CHANGELOG.md)
 - Notas de versión: [1.0.0](releases/v1.0.0.md), [1.1.0](releases/v1.1.0.md), [1.2.0](releases/v1.2.0.md)
 - GitHub Actions: [Fase 4, run 43107058958](https://github.com/Male0523/Parcial_IS/actions/runs/43107058958), [Fase 5, run 43109179938](https://github.com/Male0523/Parcial_IS/actions/runs/43109179938), [Fase 7 RED, run 43114555953](https://github.com/Male0523/Parcial_IS/actions/runs/43114555953), [Fase 7 GREEN, run 43114870307](https://github.com/Male0523/Parcial_IS/actions/runs/43114870307), [repetición documental, run 43115183647](https://github.com/Male0523/Parcial_IS/actions/runs/43115183647).
-- Integraciones: [PR #1](https://github.com/Male0523/Parcial_IS/pull/1), [PR #2](https://github.com/Male0523/Parcial_IS/pull/2), [PR #3](https://github.com/Male0523/Parcial_IS/pull/3).
+- Integraciones: [PR #1](https://github.com/Male0523/Parcial_IS/pull/1), [PR #2](https://github.com/Male0523/Parcial_IS/pull/2), [PR #3](https://github.com/Male0523/Parcial_IS/pull/3) y [PR #4](https://github.com/Male0523/Parcial_IS/pull/4).
