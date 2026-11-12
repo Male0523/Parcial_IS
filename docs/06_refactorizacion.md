@@ -34,7 +34,7 @@ Los smells anteriores son observaciones de diseño. Los defectos funcionales con
 | **Perfectivo** | Extracción de funciones, constantes semánticas, cálculos con `Decimal`, patrón Estrategia para zonas y separación entre contexto y selección de estrategia. | Mejora claridad, modularidad, exactitud decimal y facilidad para explicar o extender reglas. |
 | **Preventivo** | Validaciones explícitas, estrategia de zona tipada, pruebas de entradas no finitas/no numéricas y pruebas de regresión completas. | Reduce el riesgo de aceptar entradas inválidas o reintroducir los defectos al modificar reglas futuras. |
 
-No se implementó la zona insular ni se modificaron los parámetros personalizados. La estructura de estrategias permite añadir otras zonas en la fase de cambio sin introducirlas antes de tiempo.
+Al cierre de la Fase 5 aún no se había implementado la zona insular. La Fase 7 la incorporó; el diagrama actualizado refleja el código vigente, mientras que las mediciones comparativas y los resultados de esta sección se mantienen identificados con la fase en que se obtuvieron.
 
 ## 4. Arquitectura refactorizada
 
@@ -52,45 +52,47 @@ El orden activo del cálculo es: validar peso y día → resolver zona → tarif
 El patrón está implementado en código:
 
 1. `EstrategiaZona` define el contrato `aplicar(subtotal)`.
-2. `ZonaUrbana`, `ZonaRural` y `ZonaNacional` proporcionan comportamientos concretos.
+2. `ZonaUrbana`, `ZonaRural`, `ZonaNacional` y `ZonaInsular` proporcionan comportamientos concretos; todas declaran `permite_cupones`.
 3. `obtener_estrategia_zona` selecciona la instancia correspondiente y rechaza una zona desconocida.
 4. La función `calc` crea `CalculadoraEnvios` (el contexto) con esa estrategia.
-5. `CalculadoraEnvios.calcular` aplica `self._estrategia_zona.aplicar(subtotal)` sin conocer la fórmula particular.
+5. `CalculadoraEnvios.calcular` consulta `permite_cupones` para la política de cupón y aplica `self._estrategia_zona.aplicar(subtotal)` sin conocer la fórmula particular.
 
 Así, las reglas zonales están encapsuladas y la calculadora mantiene un flujo común. Añadir otra zona implica una estrategia concreta y su registro; no exige insertar otra rama de cálculo central.
 
 ```mermaid
 classDiagram
-    class CalculadoraEnvios {
-        -EstrategiaZona estrategia_zona
-        +calcular(peso, cliente, dia, cup) int
-    }
     class EstrategiaZona {
-        <<interface>>
-        +aplicar(subtotal) Decimal
+        <<Protocol>>
+        +permite_cupones: bool
+        +aplicar(subtotal: Decimal) Decimal
     }
     class ZonaUrbana {
-        +aplicar(subtotal) Decimal
+        +permite_cupones: bool
+        +aplicar(subtotal: Decimal) Decimal
     }
     class ZonaRural {
-        +aplicar(subtotal) Decimal
+        +permite_cupones: bool
+        +aplicar(subtotal: Decimal) Decimal
     }
     class ZonaNacional {
-        +aplicar(subtotal) Decimal
+        +permite_cupones: bool
+        +aplicar(subtotal: Decimal) Decimal
     }
-    class calc {
-        <<factory>>
-        +calc(peso, zona, cliente, dia, cup) int
+    class ZonaInsular {
+        +permite_cupones: bool
+        +aplicar(subtotal: Decimal) Decimal
+    }
+    class CalculadoraEnvios {
+        -_estrategia_zona: EstrategiaZona
+        +__init__(estrategia_zona: EstrategiaZona) None
+        +calcular(peso: object, cliente: str, dia: object, cup: str | None) int
     }
 
     EstrategiaZona <|.. ZonaUrbana
     EstrategiaZona <|.. ZonaRural
     EstrategiaZona <|.. ZonaNacional
-    CalculadoraEnvios o--> EstrategiaZona : delega recargo
-    calc ..> CalculadoraEnvios : crea contexto
-    calc ..> ZonaUrbana : selección vía registro
-    calc ..> ZonaRural : selección vía registro
-    calc ..> ZonaNacional : selección vía registro
+    EstrategiaZona <|.. ZonaInsular
+    CalculadoraEnvios --> EstrategiaZona : conserva y delega
 ```
 
 ## 5. Defectos corregidos y vínculo con pruebas
@@ -191,5 +193,5 @@ python -m pytest -q tests/ --junitxml=evidencias/junit.xml --cov=src --cov-branc
 
 - `envios.py` conserva su SHA de contenido original: `5585b110170a271dadc20c11d67f8c62fb9a0b3c`.
 - Los resultados Fase 4 en `docs/05_resultados_pruebas.md` se preservan como línea base histórica.
-- No se implementó la zona insular.
+- La Fase 5 no incorporó la zona insular; esta se agregó después en la Fase 7 y se representa en el diagrama vigente de la sección 4.2.
 - La rama de esta fase es `refactor/estrategia`; no se trabajó sobre `main`.

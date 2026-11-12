@@ -13,6 +13,7 @@ Ejecución contra `envios.py` heredado, sin cambios funcionales. La suite automa
 - **Instalación:** `python -m pip install -r requirements.txt` — paso completado.
 - **Comando de prueba:** `python -m pytest -q tests/ --junitxml=evidencias/junit.xml --cov=envios --cov-branch --cov-report=term-missing --cov-report=json:evidencias/coverage.json`
 - **Resultado:** 56 pruebas ejecutadas; **25 aprobadas, 31 fallidas, 0 errores técnicos**. Tiempo informado por pytest: 0,35 s.
+- **Aprobadas:** 25/56 × 100 = **44,64 %**. **Fallidas:** 31/56 × 100 = **55,36 %**. Los porcentajes usan como denominador las 56 pruebas ejecutadas y se redondean a dos decimales.
 - El job de Actions termina con estado fallido porque la suite conserva aserciones funcionales de R1–R8 y encontró discrepancias reales del legado. La instalación, descubrimiento y ejecución de pruebas sí finalizaron; no son fallos de entorno.
 
 ## 3. Resultados por caso fallido
@@ -57,33 +58,39 @@ Los 25 casos BB que usan peso exactamente 3 muestran primero la discrepancia de 
 
 ## 4. Defectos confirmados
 
+Las severidades ya consignadas y las prioridades añadidas a continuación son una **evaluación técnica del equipo**, basada en el alcance del incumplimiento, el impacto sobre cotizaciones y la cantidad de escenarios relacionados. No corresponden a una clasificación atribuida al profesor. P1 indica corrección prioritaria antes de considerar confiable la cotización afectada; P2 indica corrección necesaria en el ciclo de mantenimiento, con alcance más acotado.
+
 ### DEF-01 — El límite de 3 kg se asigna a la tarifa inferior
 
 - **Requisito:** R3.
 - **Evidencia principal:** BB-04 usa p=3 kg; esperado $9.000 y observado $6.000. También se repite en BB-13–BB-14, BB-16–BB-18 y BB-21–BB-39.
 - **Causa:** `envios.py` comprueba `p <= CONFIG["L1"]`; con L1=3 acepta el límite en el tramo de $6.000. R3 personalizado requiere p < 3.
-- **Severidad:** Alta; afecta la tarifa base exactamente en el umbral y contamina los totales de varios recargos/descuentos.
+- **Severidad (evaluación técnica del equipo):** Alta; afecta la tarifa base exactamente en el umbral y contamina los totales de varios recargos/descuentos.
+- **Prioridad (evaluación técnica del equipo):** P1; corregir primero porque la discrepancia de tramo se propaga a múltiples combinaciones funcionales.
 
 ### DEF-02 — No se rechazan zona y día inválidos
 
 - **Requisito:** R2.
 - **Evidencia:** BB-12, BB-15, BB-19 y BB-20 esperaban error; pytest observó retornos de $6.000, $8.000, $6.000 y $6.000, respectivamente.
 - **Causa:** la función no valida explícitamente el rango/tipo del día ni el conjunto de zonas antes de calcular.
-- **Severidad:** Media; se aceptan entradas que R2 manda rechazar, entregando cotizaciones aparentemente válidas.
+- **Severidad (evaluación técnica del equipo):** Media; se aceptan entradas que R2 manda rechazar, entregando cotizaciones aparentemente válidas.
+- **Prioridad (evaluación técnica del equipo):** P1; las entradas fuera del dominio no deben producir cotizaciones utilizables.
 
 ### DEF-03 — El sábado no activa el recargo de fin de semana
 
 - **Requisito:** R5.
 - **Evidencia:** BB-14 (día 7) y BB-21 (día 6) usan los mismos demás datos: el legado devuelve $8.000 el domingo y $6.000 el sábado. La diferencia observada de $2.000 confirma que el recargo se aplica al día 7, pero no al 6; ambos deben tener el mismo recargo.
 - **Causa:** la condición heredada es `d > 6`, que excluye sábado.
-- **Severidad:** Media; los envíos sabatinos quedan sin el recargo definido de $2.000. Los importes también contienen el defecto de tarifa de BB-04.
+- **Severidad (evaluación técnica del equipo):** Media; los envíos sabatinos quedan sin el recargo definido de $2.000. Los importes también contienen el defecto de tarifa de BB-04.
+- **Prioridad (evaluación técnica del equipo):** P2; corregir en el mismo ciclo de mantenimiento, distinguiéndolo de los errores de tarifa base o redondeo más extendidos.
 
 ### DEF-04 — El resultado trunca en vez de redondear a la centena más cercana
 
 - **Requisito:** R8.
 - **Evidencia:** BB-09: $40.999,20 debe redondear a $41.000, pero se observaron $40.900. BB-40: $9.050 debe subir a $9.100, pero se observaron $9.000.
 - **Causa:** `int(t / 100) * 100` descarta la fracción en vez de aplicar redondeo al múltiplo más cercano con empate hacia arriba.
-- **Severidad:** Media; produce importes inferiores al requerido, de forma sistemática para muchos valores que no son centenas exactas.
+- **Severidad (evaluación técnica del equipo):** Media; produce importes inferiores al requerido, de forma sistemática para muchos valores que no son centenas exactas.
+- **Prioridad (evaluación técnica del equipo):** P1; el truncamiento puede subestimar sistemáticamente cotizaciones con importes no múltiplos de $100.
 
 ## 5. Otros hallazgos y límites de interpretación
 
@@ -92,6 +99,10 @@ Los 25 casos BB que usan peso exactamente 3 muestran primero la discrepancia de 
 - BB-01–BB-03, BB-05–BB-08, BB-10–BB-11 y otros casos no incluidos en la tabla de fallos pasaron según las expectativas parametrizadas.
 - La respuesta para valores de cliente no enumerados sigue siendo ambigua y no fue convertida en requisito de validación.
 - La etapa P15 pasó tras alinear su oráculo estructural con el comportamiento observado; la expectativa funcional R3 sigue probándose separadamente con BB-04.
+
+### Densidad descriptiva de defectos estáticos
+
+Se identificaron cuatro defectos funcionales distintos (DEF-01 a DEF-04) mediante inspección y contraste con las pruebas, en un archivo heredado de 40 líneas físicas: **4 / 40 × 100 = 10 defectos identificados por cada 100 líneas físicas**. Es una razón descriptiva de hallazgos para este archivo y esta auditoría; no es una tasa estadística ni una métrica de defectos descubiertos dinámicamente. Cada defecto se cuenta una sola vez aunque afecte varios casos BB, y el denominador no pondera gravedad, complejidad, líneas ejecutables ni exposición de uso. Las 31 pruebas fallidas no se usan como número de defectos porque varias fallas comparten una causa y algunos casos reflejan más de un defecto.
 
 ## 6. Cobertura real y relación con caminos
 
