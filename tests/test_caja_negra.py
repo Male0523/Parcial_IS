@@ -1,7 +1,8 @@
 """Automatización de BB-01 a BB-41 contra los requisitos R1–R8.
 
-Los valores esperados proceden de docs/03_caja_negra.md. Algunas aserciones
-fallarán contra envios.py heredado; no se sustituyen por los resultados del legado.
+Los valores esperados proceden de docs/03_caja_negra.md. Esta suite importa
+src.calculadora.calc; no ejecuta estos casos contra envios.py, cuyas pruebas
+estructurales están separadas en test_caja_blanca.py.
 """
 import pytest
 
@@ -71,10 +72,10 @@ def test_caja_negra_requisitos_r1_a_r8(args, expected, request):
         except Exception:
             return
         pytest.fail(
-            f"{case_id}: R2 esperaba una excepción; el código heredado retornó {actual}"
+            f"{case_id}: R2 esperaba una excepción; la implementación activa retornó {actual}"
         )
 
     actual = calc(*args)
     assert actual == expected, (
-        f"{case_id}: esperado por R1–R8={expected}, observado en legado={actual}"
+        f"{case_id}: esperado por R1–R8={expected}, observado en implementación activa={actual}"
     )

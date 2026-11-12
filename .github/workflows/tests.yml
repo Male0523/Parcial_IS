@@ -3,9 +3,17 @@ name: EnvíaYa test suite
 on:
   push:
     branches:
+      - main
       - docs/fase-2-plan-pruebas
+      - "docs/**"
       - refactor/estrategia
       - feature/zona-insular
+      - test/suite
+    paths-ignore:
+      - "docs/**"
+  pull_request:
+    branches:
+      - main
     paths-ignore:
       - "docs/**"
 
@@ -30,15 +38,27 @@ jobs:
         run: |
           mkdir -p evidencias
           set +e
+          python -m pytest -q tests/ 2>&1 | tee evidencias/pytest-python-module-output.txt
+          status_python_module=${PIPESTATUS[0]}
+          pytest -q tests/ 2>&1 | tee evidencias/pytest-direct-output.txt
+          status_pytest_direct=${PIPESTATUS[0]}
+          python -m pytest -q tests/ --cov=src --cov-branch --cov-report=term-missing 2>&1 | tee evidencias/pytest-coverage-output.txt
+          status_coverage=${PIPESTATUS[0]}
           python -m pytest -q tests/ \
             --junitxml=evidencias/junit.xml \
             --cov=src --cov-branch \
             --cov-report=term-missing \
             --cov-report=json:evidencias/coverage.json \
-            2>&1 | tee evidencias/pytest-coverage-output.txt
-          status=${PIPESTATUS[0]}
-          printf '%s\n' "$status" > evidencias/pytest-exit-code.txt
-          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+            2>&1 | tee evidencias/pytest-artifact-output.txt
+          status_artifact=${PIPESTATUS[0]}
+          overall=0
+          for status in "$status_python_module" "$status_pytest_direct" "$status_coverage" "$status_artifact"; do
+            if [ "$status" -ne 0 ]; then overall=1; fi
+          done
+          printf 'python_module=%s\ndirect_pytest=%s\ncoverage=%s\nartifact_report=%s\nexit_code=%s\n' \
+            "$status_python_module" "$status_pytest_direct" "$status_coverage" "$status_artifact" "$overall" \
+            > evidencias/pytest-exit-code.txt
+          echo "exit_code=$overall" >> "$GITHUB_OUTPUT"
           python - <<'PY'
           from pathlib import Path
           import json
