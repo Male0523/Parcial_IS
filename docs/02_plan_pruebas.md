@@ -162,7 +162,9 @@ En este proyecto académico una misma persona puede desempeñar varios roles; la
 - La matriz de trazabilidad vincula R1–R8 con historias y IDs de casos; toda brecha está marcada como pendiente o ambigüedad.
 - La solicitud insular se prueba en su fase y se mantiene distinguida de la línea base R1–R8.
 
-## 14. Trazabilidad preparada para la Parte 3
+## 14. Trazabilidad inicial de la Fase 2
+
+La tabla siguiente conserva la instantánea del plan al cierre de la Fase 2: los campos pendientes describían trabajo futuro en ese momento. El diseño, automatización y resultados posteriores están en `docs/03_caja_negra.md`, `docs/04_caja_blanca.md`, `docs/05_resultados_pruebas.md` y `docs/09_informe_final.md`.
 
 Los IDs se asignarán en `docs/03_caja_negra.md` y se copiarán aquí y en `docs/01_requisitos.md`. Hasta diseñar y ejecutar esos casos, no se atribuyen resultados.
 

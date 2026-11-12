@@ -108,13 +108,13 @@ El costo final no puede ser inferior a **$5.000**. Se redondea al múltiplo de $
 
 ## 4. Comprobación de requisitos y trazabilidad
 
-La comprobación se hará con casos de prueba identificados en la Parte 3. La siguiente matriz deja preparadas las relaciones requisito–historia; los IDs se completarán al aprobar el diseño de casos. No representa resultados de ejecución.
+La matriz relaciona requisitos, historias e IDs de casos del diseño de caja negra y blanca. Los IDs quedaron completados en las fases posteriores; la tabla es trazabilidad planificada y no representa resultados de ejecución. El resumen de estado final y de verificación se mantiene en `docs/09_informe_final.md`.
 
 | Requisito | Comprobación prevista | Historia | Casos de prueba diseñados |
 |---|---|---|---|
 | R1 | Pesos 0, 0.001, 50 y sobre 50; confirmar excepción requerida y límites válidos. | HU-01, HU-03 | BB-01, BB-02, BB-10, BB-11; WB P02–P04 |
 | R2 | Zonas permitidas/no permitidas y días enteros dentro/fuera de 1–7; error para entradas inválidas, sin fijar clase. | HU-03 | BB-12–BB-15, BB-19, BB-20 |
-| R3 | Debajo, igual y encima de 3 y 10; comprobar proporcionalidad y base. | HU-01 | BB-02–BB-10, BB-40; WB P04–P05 |
+| R3 | Debajo, igual y encima de 3 y 10; comprobar proporcionalidad y base. | HU-01 | BB-02–BB-10, BB-40; WB P04 (2 kg: ruta estructural heredada p≤L1, que no define el límite de R3), P05 (peso >L1 y ≤L2) y P06 (11 kg: tramo proporcional sobre 10 kg). Para R3, el primer tramo es estrictamente p<3 kg; p=3 kg pertenece al siguiente tramo y lo comprueba BB-04. P06 también recorre una rama urbana, pero su relevancia aquí es comprobar R3. |
 | R4 | Comparar urbana, rural y nacional con las tasas 0 %, 20 % y 50 %. | HU-01 | BB-16–BB-18; WB P06–P08 |
 | R5 | Contrastar día laboral, sábado 6 y domingo 7; recargo antes de descuentos. | HU-02 | BB-14, BB-21, BB-25–BB-27, BB-31–BB-33, BB-37–BB-39; WB P09 |
 | R6 | Probar normal, frecuente y VIP, cupón válido y combinaciones; aplicar cliente antes de cupón. | HU-02 | BB-22–BB-39; WB P10–P13 |

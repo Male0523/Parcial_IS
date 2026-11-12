@@ -76,13 +76,36 @@ git show main:envios.py | sha1sum
 python -m pytest -q tests/
 ```
 
-La salida SHA-1 esperada para ambos archivos es `5585b110170a271dadc20c11d67f8c62fb9a0b3c`. GitHub Actions ejecutó el comando configurado `python -m pytest -q tests/` con reporte de cobertura en run [43111064026](https://github.com/Male0523/Parcial_IS/actions/runs/43111064026), commit `56a4e4a49fb84eb062ee353d390b3e891f2856c7`, rama `refactor/estrategia`: el job `pytest` y el paso de ejecución concluyeron correctamente; la evidencia de Fase 5 documenta 63 aprobadas, 0 fallidas, 0 errores, cobertura activa 100% (99/99 sentencias, 20/20 ramas), y el artefacto `enviaya-test-evidence-43111064026` conserva JUnit, cobertura y salida. El commit `56a4e4a` solo agregó el changelog; los commits siguientes añadieron documentos. Esta sesión no dispone de checkout local de Git/Python para ejecutar el comando después del merge y no atribuye esa ejecución al commit final `af25887`. La Fase 6 no implementa la zona insular.
+La salida SHA-1 esperada para ambos archivos es `5585b110170a271dadc20c11d67f8c62fb9a0b3c`. GitHub Actions ejecutó el comando configurado `python -m pytest -q tests/` con reporte de cobertura en run [43111064026](https://github.com/Male0523/Parcial_IS/actions/runs/43111064026), commit `56a4e4a49fb84eb062ee353d390b3e891f2856c7`, rama `refactor/estrategia`: el job `pytest` y el paso de ejecución concluyeron correctamente; la evidencia de Fase 5 documenta 63 aprobadas, 0 fallidas, 0 errores, cobertura activa 100% (99/99 sentencias, 20/20 ramas), y el artefacto `enviaya-test-evidence-43111064026` conserva JUnit, cobertura y salida. El commit `56a4e4a` solo agregó el changelog; los commits siguientes añadieron documentos. No se registró una ejecución local posterior al merge de Fase 5; por ello ese run no se atribuye al commit final `af25887`. La Fase 6 no implementa la zona insular.
 
 
-## 7. Estado final verificado
+## 7. Estado final verificado al cierre de la Fase 6
 
 - Ramas remotas presentes: `docs/fase-2-plan-pruebas`, `test/suite`, `refactor/estrategia` y `main`; las dos ramas de trabajo siguen conservadas.
 - PR #1 y PR #2 están integrados en `main`; `main` termina en `af258871346022904ebdf8fac7bfb629464bcea3` antes de este apunte final.
 - Los blobs `envios.py` en el commit heredado y en `main` se compararon: ambos tienen SHA `5585b110170a271dadc20c11d67f8c62fb9a0b3c` y contenido idéntico.
 - La etiqueta anotada `v1.0.0` fue verificada: su destino es el commit heredado `8fdc6625efaffb39dcb70d57c9495503fc096306`.
 - La salida literal del comando de git log debe generarse en Codespaces, porque este entorno de trabajo no tiene `git` instalado. Los hashes, mensajes y relaciones parentales aquí se leyeron del historial remoto.
+
+
+## 8. Actualización de estado remoto posterior a la Fase 6
+
+Esta sección complementa el registro histórico anterior; no reescribe el estado observado al cierre de la Fase 6.
+
+- HEAD remoto de `main` verificado: `9967f0d4f1c9c39d380f611f65dfaf9580a66b57`. La integración más reciente en el corte de esta actualización incluye PR #6; el commit siguiente agrega evidencias versionadas.
+- PR #1 a #6 están fusionados en `main`: #1 `24dd66794b604dfb938a6fba0759f14c1d74a1de`; #2 `af258871346022904ebdf8fac7bfb629464bcea3`; #3 `2db2f81d56d95930c5f35f9f63981ee4cc17c52c`; #4 `d24a703e5a571ea9646e30cf538897122cabd5e6`; #5 `c892adcc64691c5f58492de67a412225c1d3e295`; #6 `c9114b52c3fb61d6922828a7096dee01d14d499c`.
+- Las etiquetas anotadas existen: `v1.0.0` → `8fdc6625efaffb39dcb70d57c9495503fc096306`; `v1.1.0` → `af258871346022904ebdf8fac7bfb629464bcea3`; `v1.2.0` → `2db2f81d56d95930c5f35f9f63981ee4cc17c52c`.
+- La lista remota de ramas cambia con el tiempo; las ramas activas observadas durante esta actualización incluyen `main`, `docs/fase-2-plan-pruebas`, `docs/fase-8-informe-final`, `docs/ajuste-academico-final`, `docs/final-quality-corrections`, `chore/configuracion-mantenibilidad`, `feature/zona-insular`, `refactor/estrategia` y `test/suite`. No se encontraron ramas `fix/DEF-01` a `fix/DEF-04`; las correcciones se integraron dentro de la refactorización.
+- Actions run 43127692693, sobre el HEAD entonces actual de `main`, ejecutó 75 casos por invocación; la cobertura registrada fue 110/110 sentencias y 22/22 ramas. El historial de `evidencias/historial_git.txt` y los reportes junit/coverage versionados deben interpretarse según el commit y timestamp que contienen, no como salida de este corte: el archivo de historial guardado termina en `c9114b5` y los reportes guardados son de una ejecución de 63 casos/99 sentencias/20 ramas.
+- El texto “esta sesión no dispone de checkout local” de la sección 6 documenta la limitación existente durante la Fase 6, no el estado remoto ni una afirmación sobre el entorno actual.
+
+
+## 9. Rama de corrección final
+
+La rama `docs/final-quality-corrections` parte del HEAD `9967f0d4f1c9c39d380f611f65dfaf9580a66b57` de `main`. El PR [#7](https://github.com/Male0523/Parcial_IS/pull/7) está abierto como borrador y no está fusionado. Esta actualización añade seis pruebas específicas de recargo sobre pesos mayores de 10 kg y cambia la entrada P12 para que cubra el predicado de cupón desconocido en zona válida, conservando la complejidad ciclomática 15 documentada para `envios.py`.
+
+El run [43133563143](https://github.com/Male0523/Parcial_IS/actions/runs/43133563143), asociado al commit de pruebas `08dcbd9b2d81de87e86202e27a11447a67d4f563`, originó los reportes versionados. El run histórico [43137595479](https://github.com/Male0523/Parcial_IS/actions/runs/43137595479) validó el HEAD anterior `6377934a7757f1d0929227bdd6927ede51c264e4` y publicó su propio artefacto (ID `13907843012`). El run [43144845911](https://github.com/Male0523/Parcial_IS/actions/runs/43144845911) fue la última validación del HEAD de código anterior `44e2f8f537b652563a41c41cccfbbab248336464`: `success`, 81 aprobadas, 0 fallidas, 0 errores, 0 omitidas y cobertura `src/` 110/110 sentencias y 22/22 ramas. Después, el run [43150511560](https://github.com/Male0523/Parcial_IS/actions/runs/43150511560) validó el commit documental `058c77cf0a85b1fb6b6b940e45832255e7df562e`, también con `success`, 81 pruebas y la misma cobertura. Actions probó el candidato temporal `b722c84` contra `main` y publicó su artefacto propio (ID `13913581507`). Ninguno de estos artefactos posteriores sustituye ni altera la fuente de los reportes versionados.
+
+La validación más reciente es el run [43152169832](https://github.com/Male0523/Parcial_IS/actions/runs/43152169832), asociado al HEAD 04b6bab4a5c95a79975a772c295e6e523d453a8e. Actions ejecutó el candidato temporal de merge 7389d91363fc8a1fc718724a90b2cf8e0e6929cf, que incorpora el HEAD del PR y la base main (9967f0d4f1c9c39d380f611f65dfaf9580a66b57); terminó success con 81 aprobadas, 0 fallidas, 0 errores, 0 omitidas y cobertura src/ de 110/110 sentencias y 22/22 ramas. El run publicó su propio artefacto (ID 13914532129), independiente de los reportes versionados.
+
+Los archivos `evidencias/junit.xml` y `evidencias/coverage.json` proceden del artefacto `enviaya-test-evidence-43133563143` (ID `13906411633`), asociado al commit de pruebas `08dcbd9b2d81de87e86202e27a11447a67d4f563`: JUnit registra 81 pruebas, 0 fallidas, 0 errores y 0 omitidas; coverage registra 110/110 sentencias y 22/22 ramas en `src/` (100 %). Los artefactos de los runs `43144845911` y `43150511560` son independientes; ninguno es el origen ni reemplaza los reportes versionados. `evidencias/historial_git.txt` es un extracto verificado y limitado al commit límite indicado dentro del archivo; no sustituye la salida completa de `git log --oneline --graph --all`.

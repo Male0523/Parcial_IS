@@ -1,7 +1,7 @@
 # Parte 3. Diseño de pruebas de caja negra — EnvíaYa
 
-**Línea base:** requisitos personalizados de `docs/01_requisitos.md` y función heredada `calc` de `envios.py`.  
-**Estado:** diseño. Estos casos aún no están automatizados ni ejecutados; las salidas previstas se derivan de R1–R8.
+**Línea base del diseño:** requisitos personalizados R1–R8; las diferencias del código legado se documentan por separado.  
+**Estado histórico:** al cierre de la Fase 3 estos casos eran un diseño no automatizado; posteriormente BB-01–BB-41 se automatizaron contra `src.calculadora.calc` y se ejecutaron en Actions. Las salidas esperadas siguen derivándose de R1–R8.
 
 ## 1. Parámetros y reglas aplicadas
 

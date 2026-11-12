@@ -56,3 +56,34 @@ def test_insular_conserva_validacion_general_de_dia():
 def test_otras_zonas_ignoran_cupon_desconocido_por_r7():
     # Paridad F=2: el cupón no reconocido se ignora fuera de zona insular.
     assert calc(3, "urbana", "normal", 1, cup="CUPON-INEXISTENTE") == 9000
+
+
+
+@pytest.mark.parametrize(
+    ("peso", "zona", "cliente", "dia", "cupon", "esperado"),
+    [
+        pytest.param(
+            11, "rural", "frecuente", 1, "ENVIO10", 10100, id="INS-13"
+        ),
+        pytest.param(
+            50, "rural", "vip", 6, None, 43500, id="INS-14"
+        ),
+        pytest.param(
+            11, "nacional", "frecuente", 1, None, 14000, id="INS-15"
+        ),
+        pytest.param(
+            50, "nacional", "normal", 7, "ENVIO10", 57200, id="INS-16"
+        ),
+        pytest.param(
+            11, "insular", "frecuente", 1, None, 15800, id="INS-17"
+        ),
+        pytest.param(
+            50, "insular", "vip", 7, None, 60900, id="INS-18"
+        ),
+    ],
+)
+def test_recargos_zonales_sobre_tramo_proporcional(
+    peso, zona, cliente, dia, cupon, esperado
+):
+    """Comprueba recargos >10 kg, PMAX, calendario, descuentos y redondeo."""
+    assert calc(peso, zona, cliente, dia, cup=cupon) == esperado
