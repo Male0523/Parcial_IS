@@ -139,12 +139,12 @@ Se propone una base de 15 caminos: una ruta base y catorce rutas que incorporan 
 | P09 | Nodo 16 sí: fin de semana | (11, urbana, normal, 7, None, False) | t=11.800; retorna 11.800 |
 | P10 | Nodo 18 sí: frecuente | (11, urbana, frecuente, 1, None, False) | t=9.800×.95=9.310; retorna 9.300 |
 | P11 | Nodo 20 sí: VIP | (11, urbana, vip, 1, None, False) | t=9.800×.85=8.330; retorna 8.300 |
-| P12 | Nodo 22 no: sin cupón | (11, urbana, normal, 1, None, False) | Retorna 9.800 |
+| P12 | Nodo 5 sí y zona urbana; nodo 22 sí, nodo 23 no: cupón desconocido en una zona válida | (2, urbana, normal, 1, X, False) | Retorna 6.000; `X` se ignora según R7 |
 | P13 | Nodo 22 sí y nodo 23 sí: cupón válido | (11, urbana, normal, 1, ENVIO10, False) | t=9.800×.90=8.820; retorna 8.800 |
 | P14 | Nodo 25 sí: costo inferior al mínimo | (0.001, urbana, vip, 1, ENVIO10, False) | t=6.000×.85×.90=4.590; se fija en 5.000 |
 | P15 | Nodo 27 sí: flag verdadero | (3, urbana, normal, 1, None, True) | El legado imprime `costo: 6000` y retorna 6.000 por su condición `p <= L1`; R3 exige 9.000 para p=3 (discrepancia funcional BB-04). |
 
-El test P01 recorre la rama falsa de comparación del cupón (código desconocido), y P12 recorre la rama de cupón ausente. P13 recorre cupón presente y válido. Así se ejercitan ambas salidas de los predicados 22 y 23.
+P06 recorre cupón ausente; P12 recorre cupón desconocido en zona urbana válida; P13 recorre ENVIO10. Junto con P01, que usa cupón desconocido solo para caracterizar la caída de zonas no reconocidas del legado, se ejercitan ambas salidas de los predicados 22 y 23. P06 y P12 tienen ahora entradas y recorridos distintos; la complejidad ciclomática se conserva en 15.
 
 Los importes indicados son deducciones manuales del código original para ilustrar las rutas estructurales, no resultados de ejecución. Los resultados que incumplen R2 ilustran la ruta que ofrece la implementación heredada, no una expectativa funcional válida.
 
@@ -167,4 +167,4 @@ Para cobertura de ramas se requiere recorrer ambas salidas de cada uno de los 14
 
 ## 8. Límite de esta fase
 
-El análisis modela la función heredada sin alterar ni corregirla. La implementación no valida explícitamente zona ni día; esos casos de requisitos se diseñan en caja negra. No se ejecutó pytest, no se generaron métricas y no se ha iniciado la fase de automatización.
+Al cierre de la Fase 3, el análisis modelaba la función heredada sin alterarla y todavía no se había iniciado la automatización. En fases posteriores se implementaron P01–P15 contra `envios.py`; la cobertura de la ejecución actual de Actions mide `src/`, no `envios.py`. La función heredada sigue sin validar explícitamente zona o día, por lo que esos requisitos funcionales se comprueban en caja negra contra la calculadora activa.
