@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+
+# pytest
+.pytest_cache/
+
+# Cobertura
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Paquetes y builds locales
+*.egg-info/
+build/
+dist/
