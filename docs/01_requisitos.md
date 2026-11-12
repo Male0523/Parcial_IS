@@ -114,7 +114,7 @@ La matriz relaciona requisitos, historias e IDs de casos del diseño de caja neg
 |---|---|---|---|
 | R1 | Pesos 0, 0.001, 50 y sobre 50; confirmar excepción requerida y límites válidos. | HU-01, HU-03 | BB-01, BB-02, BB-10, BB-11; WB P02–P04 |
 | R2 | Zonas permitidas/no permitidas y días enteros dentro/fuera de 1–7; error para entradas inválidas, sin fijar clase. | HU-03 | BB-12–BB-15, BB-19, BB-20 |
-| R3 | Debajo, igual y encima de 3 y 10; comprobar proporcionalidad y base. | HU-01 | BB-02–BB-10, BB-40; WB P04–P05 |
+| R3 | Debajo, igual y encima de 3 y 10; comprobar proporcionalidad y base. | HU-01 | BB-02–BB-10, BB-40; WB P04 (peso hasta L1), P05 (peso >L1 y ≤L2) y P06 (peso >L2: entrada de 11 kg que recorre la tarifa proporcional). P06 también recorre una rama urbana, pero su relevancia aquí es comprobar R3. |
 | R4 | Comparar urbana, rural y nacional con las tasas 0 %, 20 % y 50 %. | HU-01 | BB-16–BB-18; WB P06–P08 |
 | R5 | Contrastar día laboral, sábado 6 y domingo 7; recargo antes de descuentos. | HU-02 | BB-14, BB-21, BB-25–BB-27, BB-31–BB-33, BB-37–BB-39; WB P09 |
 | R6 | Probar normal, frecuente y VIP, cupón válido y combinaciones; aplicar cliente antes de cupón. | HU-02 | BB-22–BB-39; WB P10–P13 |
