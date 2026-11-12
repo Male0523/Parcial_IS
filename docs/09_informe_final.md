@@ -139,7 +139,7 @@ La estructura automatizada está en tests/:
 - test_caja_negra.py: 41 casos funcionales BB contra la calculadora activa tras la refactorización.
 - test_caja_blanca.py: 15 caminos P contra envios.py heredado.
 - test_regresion.py: siete comprobaciones defensivas adicionales.
-- test_zona_insular.py: 12 ejecuciones nuevas parametrizadas para la solicitud insular y la paridad de cupones en otras zonas.
+- test_zona_insular.py: 18 ejecuciones parametrizadas: INS-01–INS-12 de la aceptación original y INS-13–INS-18 para recargos rural, nacional e insular con pesos mayores de 10 kg, hasta 50 kg, en días laborales y fines de semana.
 
 El workflow .github/workflows/tests.yml instala pytest y pytest-cov, ejecuta la suite y conserva JUnit XML, salida de pytest, JSON de cobertura y resumen como artefactos. Las cifras siguientes corresponden a etapas y objetos medidos distintos:
 
@@ -151,7 +151,7 @@ El workflow .github/workflows/tests.yml instala pytest y pytest-cov, ejecuta la 
 | Fase 7 GREEN, run 43114870307 | 75 aprobadas, 0 fallidas y 0 errores. | src/: 110/110 sentencias y 22/22 ramas, 100 %. |
 | Repetición documental, run 43115183647 | 75 aprobadas, 0 fallidas y 0 errores. | src/: 110/110 sentencias y 22/22 ramas, 100 %. |
 
-Los runs RED y GREEN de Fase 7 ocurrieron en feature/zona-insular antes de su PR de integración. El PR #3 integró el cambio en main; no se atribuye una ejecución local ni un run de Actions en main. La repetición documental también fue una ejecución real de Actions, no una afirmación de ejecución local.
+Los runs RED y GREEN de Fase 7 ocurrieron en feature/zona-insular antes de su PR de integración. El PR #3 integró el cambio en main. La repetición documental fue una ejecución de Actions, no local. En la rama correctiva de esta entrega, el run [43133563143](https://github.com/Male0523/Parcial_IS/actions/runs/43133563143), sobre el commit 08dcbd9b2d81de87e86202e27a11447a67d4f563, ejecutó 81 pruebas aprobadas en cada uno de los cuatro comandos del workflow; la cobertura de `src/` fue 110/110 sentencias y 22/22 ramas (100 %). Su artefacto JUnit y JSON quedó publicado por Actions. Este run verifica el contenido de esa rama, no el HEAD de `main`.
 
 ## 9. Refactorización y arquitectura
 
@@ -214,20 +214,21 @@ La suma de complejidad por bloques nuevos fue 27; no se presenta como una reducc
 
 ## 10. Gestión de configuración
 
-La auditoría remota del 11/11/2026, realizada antes de esta actualización documental, confirmó que `main` estaba en `d24a703e5a571ea9646e30cf538897122cabd5e6`, merge commit del PR #4. Los cuatro PR de integración comprobados están cerrados y fusionados:
+Al preparar esta corrección, la rama `main` estaba en el commit **9967f0d4f1c9c39d380f611f65dfaf9580a66b57** (`test: agregar evidencias de cobertura y resultados`). La rama de esta propuesta es `docs/final-quality-corrections`, creada desde ese HEAD. El PR [#7](https://github.com/Male0523/Parcial_IS/pull/7) está abierto como borrador y no se ha fusionado.
 
-| PR | Integración | Merge commit |
-|---|---|---|
-| [#1](https://github.com/Male0523/Parcial_IS/pull/1) | Suite BB-01–BB-41 y P01–P15 | 24dd66794b604dfb938a6fba0759f14c1d74a1de |
-| [#2](https://github.com/Male0523/Parcial_IS/pull/2) | Refactorización, Strategy y regresión | af258871346022904ebdf8fac7bfb629464bcea3 |
-| [#3](https://github.com/Male0523/Parcial_IS/pull/3) | Zona insular, TDD y documentos v1.2.0 | 2db2f81d56d95930c5f35f9f63981ee4cc17c52c |
-| [#4](https://github.com/Male0523/Parcial_IS/pull/4) | Informe final y PDF de Fase 8 | d24a703e5a571ea9646e30cf538897122cabd5e6 |
+| PR | Estado comprobado | Hito | Merge commit |
+|---|---|---|---|
+| [#1](https://github.com/Male0523/Parcial_IS/pull/1) | Fusionado | Suite BB y P | 24dd66794b604dfb938a6fba0759f14c1d74a1de |
+| [#2](https://github.com/Male0523/Parcial_IS/pull/2) | Fusionado | Refactorización y estrategia | af258871346022904ebdf8fac7bfb629464bcea3 |
+| [#3](https://github.com/Male0523/Parcial_IS/pull/3) | Fusionado | Zona insular | 2db2f81d56d95930c5f35f9f63981ee4cc17c52c |
+| [#4](https://github.com/Male0523/Parcial_IS/pull/4) | Fusionado | Informe final inicial | d24a703e5a571ea9646e30cf538897122cabd5e6 |
+| [#5](https://github.com/Male0523/Parcial_IS/pull/5) | Fusionado | Ajustes académicos | c892adcc64691c5f58492de67a412225c1d3e295 |
+| [#6](https://github.com/Male0523/Parcial_IS/pull/6) | Fusionado | Configuración y mantenibilidad | c9114b52c3fb61d6922828a7096dee01d14d499c |
+| [#7](https://github.com/Male0523/Parcial_IS/pull/7) | Abierto, borrador | Correcciones de calidad de esta propuesta | Pendiente |
 
-En la auditoría remota se observaron las ramas `main`, `docs/fase-2-plan-pruebas`, `docs/fase-8-informe-final`, `feature/zona-insular`, `refactor/estrategia` y `test/suite`. La rama `docs/fase-8-informe-final` permanecía en el head del PR #4. Para esta corrección documental se creó `docs/ajuste-academico-final` desde el `main` actualizado. Las ramas no se reconstruyeron ni se borraron.
+Las etiquetas Git verificadas apuntan a los hitos históricos, no al HEAD actual: `v1.0.0` → `8fdc6625efaffb39dcb70d57c9495503fc096306`; `v1.1.0` → `af258871346022904ebdf8fac7bfb629464bcea3`; `v1.2.0` → `2db2f81d56d95930c5f35f9f63981ee4cc17c52c`. CHANGELOG y notas por versión están en la raíz y en `docs/releases/`.
 
-La consulta de referencias Git encontró una sola etiqueta: la etiqueta anotada `v1.0.0`, cuyo objeto `36f9119002981d0c856d9da0b5958f20c158d53f` apunta al commit heredado `8fdc6625efaffb39dcb70d57c9495503fc096306`. `v1.1.0` y `v1.2.0` figuran en changelog y notas de versión, pero no como etiquetas Git verificadas. Los commits y merges citados describen el historial remoto; la lista completa puede consultarse en GitHub.
-
-CHANGELOG.md sigue Keep a Changelog y diferencia adiciones, cambios, correcciones, calidad y compatibilidad. Las notas están en docs/releases/.
+El historial versionado `evidencias/historial_git.txt` de main termina en `c9114b5`; por ello es una captura histórica y no representa la rama correctiva. El PR #7 agrega documentación y pruebas, sin cambiar el código de producción ni `envios.py`.
 
 ## 11. Incorporación de la zona insular
 
@@ -259,7 +260,7 @@ Los resultados de Fase 4 documentan el legado (diferencias esperadas frente a lo
 | R6 — HU-02: descuentos y orden secuencial | docs/01_requisitos.md | BB-22–BB-39 | P10–P13 | INS-06–INS-09 | `src/calculadora.py:aplicar_descuento_cliente, aplicar_cupon, CalculadoraEnvios.calcular` | Varios BB con p=3 fallan por DEF-01 y algunos por DEF-03/DEF-04; no se documenta un defecto de fórmula de descuento independiente. | Fase 5 y Fase 7 GREEN, runs 43109179938 y 43115183647. |
 | R7 — HU-02: cupón desconocido ignorado | docs/01_requisitos.md; excepción insular en docs/08_cambio_insular.md | BB-23, BB-26, BB-29, BB-32, BB-35, BB-38 | P01 (código desconocido con zona estructuralmente inválida), P12–P13 (cupón ausente/válido) | INS-02–INS-05 (insular rechaza cupones); INS-12 (urbana ignora desconocido) | `src/calculadora.py:aplicar_cupon, CalculadoraEnvios.calcular`; `src/estrategias_zona.py:permite_cupones` | Los BB con peso 3 que fallaron no aíslan R7; P01 es caracterización del legado, no una entrada de negocio válida. | INS-12 pasó en RED y suite GREEN; runs 43114555953 y 43115183647. |
 | R8 — HU-03: mínimo y redondeo | docs/01_requisitos.md | BB-08–BB-10, BB-28, BB-30–BB-41 | P14 (costo mínimo) y P15 (flag y retorno legado) | El costo mínimo usa la ruta compartida; INS no reduce los importes válidos actuales por debajo del piso. | `src/calculadora.py:aplicar_costo_minimo, redondear_a_centena` | DEF-04: BB-09 y BB-40 fallaron por truncamiento; BB-41 comprobó el piso. | Fase 5 y Fase 7 GREEN, runs 43109179938 y 43115183647. |
-| Cambio CAMBIO=0 — nueva zona insular | docs/01_requisitos.md; docs/08_cambio_insular.md | Regresión de zonas existentes: BB-01–BB-41 | P01–P15 continúan siendo exclusivos de `envios.py`; no validan la estrategia insular. | INS-01–INS-11; INS-12 verifica paridad R7 en urbana | `src/configuracion.py:RECARGO_INSULAR`; `src/estrategias_zona.py:ZonaInsular`; `src/calculadora.py:CalculadoraEnvios.calcular` | No aplica a la línea base Fase 4: el cambio insular aún no existía. | RED: run 43114555953, 64 aprobadas/11 fallidas esperadas. GREEN: runs 43114870307 y 43115183647, 75 aprobadas y cobertura de src/ 100%. |
+| Cambio CAMBIO=0 — nueva zona insular | docs/01_requisitos.md; docs/08_cambio_insular.md | Regresión de zonas existentes: BB-01–BB-41 | P01–P15 continúan siendo exclusivos de `envios.py`; no validan la estrategia insular. | INS-01–INS-11; INS-12 verifica paridad R7 en urbana; INS-13–INS-18 comprueban recargos zonales con pesos >10 y 50 kg | `src/configuracion.py:RECARGO_INSULAR`; `src/estrategias_zona.py:ZonaInsular`; `src/calculadora.py:CalculadoraEnvios.calcular` | No aplica a la línea base Fase 4: el cambio insular aún no existía. | RED: run 43114555953, 64 aprobadas/11 fallidas esperadas. GREEN: runs 43114870307 y 43115183647, 75 aprobadas y cobertura de src/ 100%. |
 
 ## 14. Referencias internas y evidencias
 
@@ -273,5 +274,8 @@ Los resultados de Fase 4 documentan el legado (diferencias esperadas frente a lo
 - [Cambio insular, TDD y resultados](08_cambio_insular.md)
 - [Changelog](../CHANGELOG.md)
 - Notas de versión: [1.0.0](releases/v1.0.0.md), [1.1.0](releases/v1.1.0.md), [1.2.0](releases/v1.2.0.md)
-- GitHub Actions: [Fase 4, run 43107058958](https://github.com/Male0523/Parcial_IS/actions/runs/43107058958), [Fase 5, run 43109179938](https://github.com/Male0523/Parcial_IS/actions/runs/43109179938), [Fase 7 RED, run 43114555953](https://github.com/Male0523/Parcial_IS/actions/runs/43114555953), [Fase 7 GREEN, run 43114870307](https://github.com/Male0523/Parcial_IS/actions/runs/43114870307), [repetición documental, run 43115183647](https://github.com/Male0523/Parcial_IS/actions/runs/43115183647).
-- Integraciones: [PR #1](https://github.com/Male0523/Parcial_IS/pull/1), [PR #2](https://github.com/Male0523/Parcial_IS/pull/2), [PR #3](https://github.com/Male0523/Parcial_IS/pull/3) y [PR #4](https://github.com/Male0523/Parcial_IS/pull/4).
+- GitHub Actions: [Fase 4, run 43107058958](https://github.com/Male0523/Parcial_IS/actions/runs/43107058958), [Fase 5, run 43109179938](https://github.com/Male0523/Parcial_IS/actions/runs/43109179938), [Fase 7 RED, run 43114555953](https://github.com/Male0523/Parcial_IS/actions/runs/43114555953), [Fase 7 GREEN, run 43114870307](https://github.com/Male0523/Parcial_IS/actions/runs/43114870307), [repetición documental, run 43115183647](https://github.com/Male0523/Parcial_IS/actions/runs/43115183647), [corrección final, run 43133563143](https://github.com/Male0523/Parcial_IS/actions/runs/43133563143).
+- Integraciones: [PR #1](https://github.com/Male0523/Parcial_IS/pull/1), [PR #2](https://github.com/Male0523/Parcial_IS/pull/2), [PR #3](https://github.com/Male0523/Parcial_IS/pull/3) y [PR #4](https://github.com/Male0523/Parcial_IS/pull/4), [PR #5](https://github.com/Male0523/Parcial_IS/pull/5), [PR #6](https://github.com/Male0523/Parcial_IS/pull/6) y [PR #7](https://github.com/Male0523/Parcial_IS/pull/7).
+
+
+**Nota de consistencia de evidencias (PR #7).** La ejecución actual de Actions es el run 43133563143 en el commit 08dcbd9b2d81de87e86202e27a11447a67d4f563. Los archivos versionados `evidencias/coverage.json`, `evidencias/junit.xml` y `evidencias/historial_git.txt` aún contienen la captura histórica de main y no se identifican aquí como regenerados. El artefacto adjunto al run contiene los reportes actuales; esta limitación se resolverá al transferir la salida del artefacto a los archivos del repositorio. El PDF de este informe tampoco se regeneró en esta propuesta, por lo que corresponde al Markdown anterior y debe actualizarse antes de considerar cerrada la entrega documental.
