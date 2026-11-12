@@ -150,6 +150,7 @@ El workflow .github/workflows/tests.yml instala pytest y pytest-cov, ejecuta la 
 | Fase 7 RED, run 43114555953, antes de implementar zona insular | 75 ejecutadas: 64 aprobadas y 11 fallidas esperadas por zona aún no soportada. | src/: 99/99 sentencias y 20/20 ramas, 100 %. |
 | Fase 7 GREEN, run 43114870307 | 75 aprobadas, 0 fallidas y 0 errores. | src/: 110/110 sentencias y 22/22 ramas, 100 %. |
 | Repetición documental, run 43115183647 | 75 aprobadas, 0 fallidas y 0 errores. | src/: 110/110 sentencias y 22/22 ramas, 100 %. |
+| Corrección final PR #7, run 43133563143, commit 08dcbd9b2d81de87e86202e27a11447a67d4f563 | 81 aprobadas en cada uno de los cuatro comandos del workflow; 0 fallidas y 0 errores. | src/: 110/110 sentencias y 22/22 ramas, 100 %. |
 
 Los runs RED y GREEN de Fase 7 ocurrieron en feature/zona-insular antes de su PR de integración. El PR #3 integró el cambio en main. La repetición documental fue una ejecución de Actions, no local. En la rama correctiva de esta entrega, el run [43133563143](https://github.com/Male0523/Parcial_IS/actions/runs/43133563143), sobre el commit 08dcbd9b2d81de87e86202e27a11447a67d4f563, ejecutó 81 pruebas aprobadas en cada uno de los cuatro comandos del workflow; la cobertura de `src/` fue 110/110 sentencias y 22/22 ramas (100 %). Su artefacto JUnit y JSON quedó publicado por Actions. Este run verifica el contenido de esa rama, no el HEAD de `main`.
 
@@ -244,7 +245,7 @@ La evidencia TDD es RED en run 43114555953 y GREEN en run 43114870307, seguida p
 
 La trazabilidad se conserva desde las reglas personalizadas y las historias HU-01 a HU-03 hasta los casos de caja negra, caminos de caja blanca, funciones y evidencia de Actions. La evaluación heredada hizo visibles cuatro defectos sin alterar el artefacto histórico. La refactorización separó validación, cálculo y estrategia; la zona insular se añadió como una estrategia compatible con el flujo existente.
 
-La evidencia de cobertura al 100 % se presenta siempre asociada a su fase y objeto medido. En particular, el 100 % sobre envios.py de Fase 4 no significa que las reglas fueran funcionalmente correctas: la suite heredada tuvo 31 fallas legítimas frente a requisitos. Las 75 pruebas aprobadas y la cobertura 110/110 sentencias y 22/22 ramas pertenecen a las ejecuciones GREEN de la calculadora activa. Las ejecuciones finales citadas corresponden a GitHub Actions en sus respectivas ramas y commits; no se atribuye una ejecución local ni un resultado de Actions al commit consolidado de main.
+La evidencia de cobertura al 100 % se presenta siempre asociada a su fase y objeto medido. En particular, el 100 % sobre envios.py de Fase 4 no significa que las reglas fueran funcionalmente correctas: la suite heredada tuvo 31 fallas legítimas frente a requisitos. Las 75 pruebas aprobadas y la cobertura 110/110 sentencias y 22/22 ramas pertenecen a las ejecuciones GREEN de Fase 7. La ejecución correctiva en la rama del PR #7 aprobó 81 pruebas y obtuvo 110/110 sentencias y 22/22 ramas. Las ejecuciones citadas son de GitHub Actions y se asocian a sus ramas y commits; no se atribuye ejecución local.
 
 ## 13. Matriz de trazabilidad
 
