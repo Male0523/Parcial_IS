@@ -146,6 +146,8 @@ Se propone una base de 15 caminos: una ruta base y catorce rutas que incorporan 
 
 P06 recorre cupón ausente; P12 recorre cupón desconocido en zona urbana válida; P13 recorre ENVIO10. Junto con P01, que usa cupón desconocido solo para caracterizar la caída de zonas no reconocidas del legado, se ejercitan ambas salidas de los predicados 22 y 23. P06 y P12 tienen ahora entradas y recorridos distintos; la complejidad ciclomática se conserva en 15.
 
+**Aclaración de R3 para P04–P06.** P04 usa 2 kg para recorrer la condición estructural heredada p <= L1; ese camino no redefine el requisito. En R3, el primer tramo se aplica estrictamente a pesos menores que 3 kg; exactamente 3 kg pertenece al segundo tramo, como comprueba BB-04. P06 usa 11 kg para comprobar la tarifa proporcional sobre 10 kg. Aunque también recorre la rama urbana, su relevancia para R3 es el tramo proporcional.
+
 Los importes indicados son deducciones manuales del código original para ilustrar las rutas estructurales, no resultados de ejecución. Los resultados que incumplen R2 ilustran la ruta que ofrece la implementación heredada, no una expectativa funcional válida.
 
 ## 7. Cobertura de sentencias y ramas
