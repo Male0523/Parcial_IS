@@ -1,7 +1,7 @@
 # Parte 4. Diseño de pruebas de caja blanca — función heredada `calc`
 
 **Objeto analizado:** exclusivamente `calc(p, z, c, d, cup=None, flag=False)` en el archivo original `envios.py` de la rama de trabajo.  
-**Estado:** análisis estático del flujo; las pruebas propuestas no se han ejecutado. No se analiza ninguna versión refactorizada.
+**Estado del análisis:** análisis estático del flujo de `envios.py`, cerrado en la Fase 3. Las pruebas P01–P15 se automatizaron y ejecutaron posteriormente como caracterización del legado; no analizan una versión refactorizada.
 
 ## 1. Convenciones del grafo
 
