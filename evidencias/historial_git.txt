@@ -2,10 +2,13 @@
 
 Rama: docs/final-quality-corrections
 Base: main en 9967f0d4f1c9c39d380f611f65dfaf9580a66b57
-Estado capturado hasta el commit e909585d9fab4edbea438a1d7d53779c7843e8c4 (inmediatamente anterior a la actualización de este archivo).
+Commit límite capturado: e8e7e33d4eb93c14243ea3be3fbcb1a42bbf2868 (HEAD inmediatamente anterior a este commit de actualización del historial).
 
-Este extracto refleja los 15 commits lineales incorporados a la rama desde la base. No es una salida íntegra de `git log --oneline --graph --all`: la lista completa de refs requiere ejecutar ese comando en un checkout con todas las ramas descargadas. Los identificadores y mensajes del extracto corresponden a los commits remotos observados.
+Este extracto contiene los 18 commits lineales de la rama posteriores a main. No equivale a la salida íntegra de `git log --oneline --graph --all`: no incluye las demás refs paralelas. La lista completa requiere un checkout con todas las ramas y ejecutar ese comando. Identificadores abreviados y mensajes corresponden a commits remotos observados.
 
+e8e7e33 docs: aclarar alcance del historial y reportes
+ff9f6d0 docs: precisar alcance de evidencias versionadas
+b5f5a31 docs: actualizar extracto de historial de rama
 e909585 docs: alinear trazabilidad con casos ampliados
 cbc161c docs: actualizar trazabilidad de ramas y acciones
 60fda33 docs: registrar regresión ampliada de zona insular
@@ -21,6 +24,7 @@ fcf03fb docs: actualizar requisitos.md
 bc5cede docs: actualizar caja_negra.md
 35ee13b test: corregir caminos independientes del legado
 5d7f6c0 test: ampliar recargos zonales sobre 10 kg
-9967f0d test: agregar evidencias de cobertura y resultados
 
-Verificación de referencia: comparación remota main...docs/final-quality-corrections con base 9967f0d; la rama estaba 15 commits adelante y 0 detrás cuando se capturó el listado.
+Referencia base incluida: 9967f0d test: agregar evidencias de cobertura y resultados
+
+La comparación remota main...docs/final-quality-corrections confirmó 18 commits adelante y 0 detrás antes de crear este commit de actualización.
