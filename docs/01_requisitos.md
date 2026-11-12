@@ -108,7 +108,7 @@ El costo final no puede ser inferior a **$5.000**. Se redondea al múltiplo de $
 
 ## 4. Comprobación de requisitos y trazabilidad
 
-La comprobación se hará con casos de prueba identificados en la Parte 3. La siguiente matriz deja preparadas las relaciones requisito–historia; los IDs se completarán al aprobar el diseño de casos. No representa resultados de ejecución.
+La matriz relaciona requisitos, historias e IDs de casos del diseño de caja negra y blanca. Los IDs quedaron completados en las fases posteriores; la tabla es trazabilidad planificada y no representa resultados de ejecución. El resumen de estado final y de verificación se mantiene en `docs/09_informe_final.md`.
 
 | Requisito | Comprobación prevista | Historia | Casos de prueba diseñados |
 |---|---|---|---|
