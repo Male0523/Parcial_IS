@@ -76,7 +76,7 @@ git show main:envios.py | sha1sum
 python -m pytest -q tests/
 ```
 
-La salida SHA-1 esperada para ambos archivos es `5585b110170a271dadc20c11d67f8c62fb9a0b3c`. GitHub Actions ejecutó el comando configurado `python -m pytest -q tests/` con reporte de cobertura en run [43111064026](https://github.com/Male0523/Parcial_IS/actions/runs/43111064026), commit `56a4e4a49fb84eb062ee353d390b3e891f2856c7`, rama `refactor/estrategia`: el job `pytest` y el paso de ejecución concluyeron correctamente; la evidencia de Fase 5 documenta 63 aprobadas, 0 fallidas, 0 errores, cobertura activa 100% (99/99 sentencias, 20/20 ramas), y el artefacto `enviaya-test-evidence-43111064026` conserva JUnit, cobertura y salida. El commit `56a4e4a` solo agregó el changelog; los commits siguientes añadieron documentos. Esta sesión no dispone de checkout local de Git/Python para ejecutar el comando después del merge y no atribuye esa ejecución al commit final `af25887`. La Fase 6 no implementa la zona insular.
+La salida SHA-1 esperada para ambos archivos es `5585b110170a271dadc20c11d67f8c62fb9a0b3c`. GitHub Actions ejecutó el comando configurado `python -m pytest -q tests/` con reporte de cobertura en run [43111064026](https://github.com/Male0523/Parcial_IS/actions/runs/43111064026), commit `56a4e4a49fb84eb062ee353d390b3e891f2856c7`, rama `refactor/estrategia`: el job `pytest` y el paso de ejecución concluyeron correctamente; la evidencia de Fase 5 documenta 63 aprobadas, 0 fallidas, 0 errores, cobertura activa 100% (99/99 sentencias, 20/20 ramas), y el artefacto `enviaya-test-evidence-43111064026` conserva JUnit, cobertura y salida. El commit `56a4e4a` solo agregó el changelog; los commits siguientes añadieron documentos. No se registró una ejecución local posterior al merge de Fase 5; por ello ese run no se atribuye al commit final `af25887`. La Fase 6 no implementa la zona insular.
 
 
 ## 7. Estado final verificado al cierre de la Fase 6
@@ -98,3 +98,12 @@ Esta sección complementa el registro histórico anterior; no reescribe el estad
 - La lista remota de ramas cambia con el tiempo; las ramas activas observadas durante esta actualización incluyen `main`, `docs/fase-2-plan-pruebas`, `docs/fase-8-informe-final`, `docs/ajuste-academico-final`, `docs/final-quality-corrections`, `chore/configuracion-mantenibilidad`, `feature/zona-insular`, `refactor/estrategia` y `test/suite`. No se encontraron ramas `fix/DEF-01` a `fix/DEF-04`; las correcciones se integraron dentro de la refactorización.
 - Actions run 43127692693, sobre el HEAD entonces actual de `main`, ejecutó 75 casos por invocación; la cobertura registrada fue 110/110 sentencias y 22/22 ramas. El historial de `evidencias/historial_git.txt` y los reportes junit/coverage versionados deben interpretarse según el commit y timestamp que contienen, no como salida de este corte: el archivo de historial guardado termina en `c9114b5` y los reportes guardados son de una ejecución de 63 casos/99 sentencias/20 ramas.
 - El texto “esta sesión no dispone de checkout local” de la sección 6 documenta la limitación existente durante la Fase 6, no el estado remoto ni una afirmación sobre el entorno actual.
+
+
+## 9. Rama de corrección final
+
+La rama `docs/final-quality-corrections` parte del HEAD `9967f0d4f1c9c39d380f611f65dfaf9580a66b57` de `main`. El PR [#7](https://github.com/Male0523/Parcial_IS/pull/7) está abierto como borrador y no está fusionado. Esta actualización añade seis pruebas específicas de recargo sobre pesos mayores de 10 kg y cambia la entrada P12 para que cubra el predicado de cupón desconocido en zona válida, conservando la complejidad ciclomática 15 documentada para `envios.py`.
+
+El run de Actions [43133563143](https://github.com/Male0523/Parcial_IS/actions/runs/43133563143), asociado al commit de pruebas `08dcbd9b2d81de87e86202e27a11447a67d4f563`, registró 81 pruebas aprobadas en cada invocación, con 110/110 sentencias y 22/22 ramas de `src/`. Los cambios documentales posteriores no modifican las pruebas ni el código.
+
+Los archivos versionados `evidencias/coverage.json`, `evidencias/junit.xml` e `historial_git.txt` de la rama base son capturas históricas; no se afirma que hayan sido regenerados aquí. El artefacto del run conserva los reportes actuales para descarga. El historial de rama incluido en el PR aún no se actualizó a la nueva secuencia de commits.
