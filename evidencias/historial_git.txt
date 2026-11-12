@@ -1,75 +1,26 @@
-*   c9114b5 (HEAD -> main, origin/main, origin/HEAD) Merge pull request #6 from Male0523/chore/configuracion-mantenibilidad
-|\  
-| * b44f500 (origin/chore/configuracion-mantenibilidad) test: configurar imports y descubrimiento pytest
-| * 55a753a chore: ignorar artefactos locales de Python
-| * 295dbba test: corregir referencias a implementación activa
-| * 327ab57 ci: probar main y verificar comandos pytest
-| * d2de026 docs: documentar instalación y arquitectura
-|/  
-*   c892adc Merge pull request #5 from Male0523/docs/ajuste-academico-final
-|\  
-| * f72f055 (origin/docs/ajuste-academico-final) docs: regenerar PDF con correcciones académicas
-| * 368bef6 docs: completar referencias de integraciones
-| * b64d5e0 docs: completar portada y trazabilidad final
-| * 47e42ff docs: actualizar UML de estrategias de zona
-| * d1878fb docs: actualizar correcciones académicas
-| * 24f9f53 docs: actualizar correcciones académicas
-| * 41394fa docs: actualizar correcciones académicas
-|/  
-*   d24a703 Merge pull request #4 from Male0523/docs/fase-8-informe-final
-|\  
-| * bbee85d (origin/docs/fase-8-informe-final) docs: adjuntar informe final en PDF
-| * e37a65f docs: precisar commits de automatización en informe
-| * e935404 docs: añadir informe final del proyecto EnvíaYa
-|/  
-*   2db2f81 (tag: v1.2.0) merge: integrar zona insular de San Andrés
-|\  
-| * b8f73d9 (origin/feature/zona-insular) docs: corregir estado verificado de etiqueta heredada
-| * 9730a53 docs: añadir notas de versión 1.2.0
-| * b82168d docs: registrar release 1.2.0 de zona insular
-| * 4a1d788 docs: documentar incorporación de zona insular
-| * 56509e1 feat: añadir estrategia de zona insular
-| * 9b8055d ci: ejecutar pruebas también en feature zona insular
-| * d319927 test: definir aceptación para zona insular
-|/  
-* 5676c77 docs: registrar merges y verificación final de fase 6
-*   af25887 (tag: v1.1.0) merge: integrar refactor y versionamiento
-|\  
-| * 3158dcf (origin/refactor/estrategia) docs: añadir notas de versión 1.1.0
-| * 4bebe67 docs: añadir notas de versión 1.0.0
-| * 72b278e docs: documentar gestión de configuración y ramas
-| * 56a4e4a docs: añadir changelog semántico
-| * 9b7c1b0 (refactor/estrategia) docs: detallar métrica de complejidad por función
-| * 6b0318c docs: añadir regresión posterior a línea base histórica
-| * 52e8d75 docs: documentar refactorizacion y regresion de EnvíaYa
-| * 857388d refactor: introducir contexto de calculadora por estrategia
-| * c1df902 ci: medir cobertura de la implementación refactorizada
-| * 9ede5df test: añadir regresiones defensivas de validación
-| * fa05d4e test: dirigir regresión funcional a calculadora nueva
-| * b5d2964 refactor: agregar calculadora.py
-| * bdffd5d refactor: agregar estrategias_zona.py
-| * f69ba0a refactor: agregar configuracion.py
-| * cd7296c refactor: agregar __init__.py
-* | 24dd667 merge: integrar suite de pruebas BB y P
-|\| 
-| * 37dd270 (origin/test/suite, origin/docs/fase-2-plan-pruebas) docs: registrar resultados reales de pruebas heredadas
-| * cefd3cf ci: separar métricas de sentencias y ramas
-| * a3d0377 test: mostrar retorno legado en fallos de R2
-| * ea18fbf test: caracterizar salida heredada del camino P15
-| * 175fff8 docs: alinear P15 con salida estática del legado
-| * 404eba0 ci: ejecutar pytest y conservar reportes de cobertura
-| * d0e8a07 test: automatizar caminos P01 a P15 de calc heredada
-| * d796c2f test: automatizar casos de caja negra BB-01 a BB-41
-| * 0bc3a36 build: declarar dependencias de pruebas
-| * b778ac2 docs: aclarar ruta estructural de zona inválida
-| * 176e4b4 docs: distinguir resultados requeridos y legado
-| * ef32c4f docs: vincular requisitos con casos de prueba
-| * 6a14516 test: documentar flujo y complejidad de calc heredada
-| * 1325bdb docs: depurar matriz de caja negra y cálculos
-| * 111d433 test: diseñar casos de caja negra EnvíaYa
-| * 5d0822e (docs/fase-2-plan-pruebas) docs: agregar plan de pruebas de EnvíaYa
-| * 50d39ed docs: precisar requisitos y trazabilidad inicial
-|/  
-* 545ec59 docs: documentar requisitos y criterios de aceptacion personalizados
-* 8fdc662 (tag: v1.0.0) chore: registrar codigo heredado con parametros personalizados
-* 3ffcbe0 Initial commit
+# Historial de la rama correctiva EnvíaYa
+
+Rama: docs/final-quality-corrections
+Base: main en 9967f0d4f1c9c39d380f611f65dfaf9580a66b57
+Estado capturado hasta el commit e909585d9fab4edbea438a1d7d53779c7843e8c4 (inmediatamente anterior a la actualización de este archivo).
+
+Este extracto refleja los 15 commits lineales incorporados a la rama desde la base. No es una salida íntegra de `git log --oneline --graph --all`: la lista completa de refs requiere ejecutar ese comando en un checkout con todas las ramas descargadas. Los identificadores y mensajes del extracto corresponden a los commits remotos observados.
+
+e909585 docs: alinear trazabilidad con casos ampliados
+cbc161c docs: actualizar trazabilidad de ramas y acciones
+60fda33 docs: registrar regresión ampliada de zona insular
+1cbc207 docs: precisar resultados actuales de pruebas
+a08009b docs: actualizar estado real del informe final
+08dcbd9 test: corregir caminos independientes del legado
+306e69e docs: detallar cálculos de recargos zonales
+e98dd39 test: corregir caminos independientes del legado
+c3f0f42 docs: actualizar cambio_insular.md
+03962c9 docs: actualizar gestion_configuracion.md
+255dcb9 docs: actualizar plan_pruebas.md
+fcf03fb docs: actualizar requisitos.md
+bc5cede docs: actualizar caja_negra.md
+35ee13b test: corregir caminos independientes del legado
+5d7f6c0 test: ampliar recargos zonales sobre 10 kg
+9967f0d test: agregar evidencias de cobertura y resultados
+
+Verificación de referencia: comparación remota main...docs/final-quality-corrections con base 9967f0d; la rama estaba 15 commits adelante y 0 detrás cuando se capturó el listado.
